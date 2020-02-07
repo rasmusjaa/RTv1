@@ -6,11 +6,13 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 17:28:48 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/06 16:25:28 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/07 15:30:02 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_rtv1.h"
+
+// void		read_scene(t_mlx *mlx);
 
 void		refresh(t_mlx *mlx)
 {
@@ -30,8 +32,10 @@ int			exit_free(t_mlx *mlx)
 
 void		set_objects(t_mlx *mlx)
 {
+//	read_scene(mlx);
+	ft_printf("origin %f %f %f\n", mlx->camera->origin.x, mlx->camera->origin.y, mlx->camera->origin.z);
+	ft_printf("cam target %f %f %f\n", mlx->camera->target.x, mlx->camera->target.y, mlx->camera->target.z);
 	perspective_cam(mlx->camera->origin, mlx->camera->target, mlx);
-//	ft_printf("origin %f %f %f\n", mlx->camera.origin.x, mlx->camera.origin.y, mlx->camera.origin.z);
 //	ft_printf("forward %f %f %f\n", mlx->camera.forward.x, mlx->camera.forward.y, mlx->camera.forward.z);
 //	ft_printf("right %f %f %f\n", mlx->camera.right.x, mlx->camera.right.y, mlx->camera.right.z);
 //	ft_printf("up %f %f %f\n", mlx->camera.up.x, mlx->camera.up.y, mlx->camera.up.z);

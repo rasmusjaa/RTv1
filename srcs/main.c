@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 16:23:37 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/06 16:24:30 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/07 16:15:54 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void			multi_thread(t_mlx *mlx)
 	t_mlx		*copies[THREADS];
 	int			i;
 
-	ft_printf("cam target %f %f %f\n", mlx->camera->target.x, mlx->camera->target.y, mlx->camera->target.z);
 	set_objects(mlx);
 	thread_group = malloc(sizeof(pthread_t) * THREADS);
 	i = 0;
@@ -52,7 +51,7 @@ static void		mlx_values(t_mlx *mlx)
 	mlx->img_width = IMG_WIDTH;
 	mlx->img_height = IMG_HEIGHT;
 	mlx->camera->origin = set_vector(0, 0, 0);
-	mlx->camera->target = set_vector(0, 0, -1);
+	mlx->camera->target = set_vector(0, 0, -5);
 	mlx->scene->ambient = 0x000000;
 }
 

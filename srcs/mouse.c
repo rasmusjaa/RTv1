@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:37:11 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/06 16:23:01 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/07 15:59:30 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ static void	mouse_press2(int button, int x, int y, t_mlx *mlx)
 	sphere.p.x = 0;
 	sphere.p.y = 0;
 	sphere.p.z = -5;
-	sphere.color = 0x00ffff;
+	sphere.color = 0x0000ff;
 
 	t_sphere	sphere2;
 	sphere2.radius = 1;
 	sphere2.p.x = 0;
 	sphere2.p.y = 0;
 	sphere2.p.z = -3;
-	sphere2.color = 0xffff00;
+	sphere2.color = 0x00ff00;
 
 	t_intersection ix;
 

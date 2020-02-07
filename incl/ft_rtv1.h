@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 11:37:09 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/06 16:23:38 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/07 14:42:54 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct		s_plane
 	int				color;
 	int				index;
 	double			t1;
+	int				i;
 }					t_plane;
 
 typedef struct		s_sphere
@@ -65,6 +66,7 @@ typedef struct		s_sphere
 	int				index;
 	double			t1;
 	double			t2;
+	int				i;
 }					t_sphere;
 
 typedef struct		s_intersection
@@ -108,6 +110,8 @@ typedef struct		s_mlx
 	int			thread;
 	t_camera	*camera;
 	t_scene		*scene;
+	t_sphere	sphere[10];
+	t_plane		plane[10];
 	int			mousemove;
 	int			mouse_1;
 	int			mouse_2;

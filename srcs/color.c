@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:28:57 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/06 15:40:43 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/07 15:32:04 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		color_distance(double dist, int color)
 	int		g;
 	int		b;
 
-	max = 10;
+	max = 20;
 	intensity = 1 - (dist / max);
 	if (intensity > 1)
 		intensity = 1.0;

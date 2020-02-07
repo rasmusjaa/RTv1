@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 18:35:28 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/06 16:18:44 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/07 14:13:50 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int		get_color(int x, int y, t_mlx *mlx)
 	sphere2.color = 0x00ff00;
 
 	t_plane		plane;
-	plane.p = set_vector(0, -1, 0);
-	plane.normal = set_vector(0, 1 ,0);
+	plane.p = set_vector(0, -1, -3);
+	plane.normal = set_vector(1, 1 , 1);
 	plane.color = 0xff0000;
 
 	t_intersection ix;
