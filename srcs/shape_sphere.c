@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:41:55 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/05 17:26:21 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/06 14:32:47 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int			sphere_intersection(t_sphere sphere, t_intersection *x)
 	}
 	t1 = (-1 * quadratic.y - sqrt(d)) / (2 * quadratic.x);
 	t2 = (-1 * quadratic.y + sqrt(d)) / (2 * quadratic.x);
-	x->shape = SPHERE;
+	if (t1 > 0 && t1 < x->closest)
+	{
+		x->closest = t1;
+		x->color = color_distance(t1, sphere.color);
+		x->shape = SPHERE;
+	}
 	return (2);
 }

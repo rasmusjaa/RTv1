@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 12:27:27 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/05 17:44:08 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/06 11:39:38 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_vector	vector_divide_nb(t_vector v1, double nb)
 {
 	t_vector	v2;
 
-	if (nb = 0)
+	if (nb == 0)
 	{
 		ft_putendl("Prevented vector division by 0");
 		return (v1);

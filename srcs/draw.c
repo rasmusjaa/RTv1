@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 18:35:28 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/05 17:48:41 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/06 16:18:44 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,28 @@ int		get_color(int x, int y, t_mlx *mlx)
 	sphere.p.x = 0;
 	sphere.p.y = 0;
 	sphere.p.z = -5;
-	sphere.color = 0xffffff;
+	sphere.color = 0x0000ff;
+
+	t_sphere	sphere2;
+	sphere2.radius = 1;
+	sphere2.p.x = 0;
+	sphere2.p.y = 0;
+	sphere2.p.z = -3;
+	sphere2.color = 0x00ff00;
+
+	t_plane		plane;
+	plane.p = set_vector(0, -1, 0);
+	plane.normal = set_vector(0, 1 ,0);
+	plane.color = 0xff0000;
 
 	t_intersection ix;
 
-	ix = get_intersection(ray);
+	ix = get_intersection(ray, mlx);
 
-	if (sphere_intersection(sphere, &ix) != 0)
-	{
-		return (sphere.color);
-	}
-	return (0x000000);
+	sphere_intersection(sphere, &ix);
+	sphere_intersection(sphere2, &ix);
+	plane_intersection(plane, &ix);
+	return (ix.color);
 }
 
 void		*draw_view(void *data)
@@ -56,7 +67,7 @@ void		*draw_view(void *data)
 
 	mlx = (t_mlx *)data;
 
-	color = 0x000000;
+	color = mlx->scene->ambient;
 	y = mlx->thread;
 	while (y < mlx->img_height)
 	{

@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normalize_vector.c                                 :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/03 12:00:05 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/06 11:39:44 by rjaakonm         ###   ########.fr       */
+/*   Created: 2020/02/06 14:28:57 by rjaakonm          #+#    #+#             */
+/*   Updated: 2020/02/06 15:40:43 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_rtv1.h"
 
-double		normalize_vector(t_vector *v)
+int		color_distance(double dist, int color)
 {
-	double	len;
+	double	intensity;
+	double	max;
+	int		r;
+	int		g;
+	int		b;
 
-	len = vector_length(*v);
-	if (len == 0)
-	{
-		ft_putendl("Prevented vector division by 0 length");
-		return (len);
-	}
-	v->x /= len;
-	v->y /= len;
-	v->z /= len;
-	return (len);
-}
+	max = 10;
+	intensity = 1 - (dist / max);
+	if (intensity > 1)
+		intensity = 1.0;
+	intensity = pow(intensity, 2.2);
 
-t_vector	normalized_vector(t_vector v)
-{
-	t_vector	v2;
-
-	v2 = copy_vector(v);
-	normalize_vector(&v2);
-	return (v2);
+	r = ((color >> 16) & 0xff) * intensity;
+	g = ((color >> 8) & 0xff) * intensity;
+	b = (color & 0xff) * intensity;
+	color = r<<16 | g<<8 | b;
+	return (color);
 }

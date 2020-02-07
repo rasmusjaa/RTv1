@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 16:23:37 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/05 17:36:09 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/06 16:24:30 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void			multi_thread(t_mlx *mlx)
 	t_mlx		*copies[THREADS];
 	int			i;
 
+	ft_printf("cam target %f %f %f\n", mlx->camera->target.x, mlx->camera->target.y, mlx->camera->target.z);
+	set_objects(mlx);
 	thread_group = malloc(sizeof(pthread_t) * THREADS);
 	i = 0;
 	while (i < THREADS)
@@ -42,19 +44,16 @@ void			multi_thread(t_mlx *mlx)
 	}
 	free(thread_group);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img_ptr, 0, 0);
-//	add_texts(mlx);
+	add_texts(mlx);
 }
 
 static void		mlx_values(t_mlx *mlx)
 {
 	mlx->img_width = IMG_WIDTH;
 	mlx->img_height = IMG_HEIGHT;
-	mlx->camera = perspective_cam(vector_0(), set_vector(0, 0, -1), mlx);
-	ft_printf("origin %f %f %f\n", mlx->camera->origin.x, mlx->camera->origin.y, mlx->camera->origin.z);
-	ft_printf("forward %f %f %f\n", mlx->camera->forward.x, mlx->camera->forward.y, mlx->camera->forward.z);
-	ft_printf("right %f %f %f\n", mlx->camera->right.x, mlx->camera->right.y, mlx->camera->right.z);
-	ft_printf("up %f %f %f\n", mlx->camera->up.x, mlx->camera->up.y, mlx->camera->up.z);
-	ft_printf("height %f width %f\n", mlx->camera->height, mlx->camera->width);
+	mlx->camera->origin = set_vector(0, 0, 0);
+	mlx->camera->target = set_vector(0, 0, -1);
+	mlx->scene->ambient = 0x000000;
 }
 
 static int		mlx_start(t_mlx	*mlx)
@@ -68,9 +67,9 @@ static int		mlx_start(t_mlx	*mlx)
 	mlx->bpp /= 8;
 	multi_thread(mlx);
 	mlx_hook(mlx->win_ptr, 2, 0, deal_key, mlx);
-/*	mlx_hook(mlx->win_ptr, 4, 0, mouse_press, mlx);
+	mlx_hook(mlx->win_ptr, 4, 0, mouse_press, mlx);
 	mlx_hook(mlx->win_ptr, 5, 0, mouse_release, mlx);
-	mlx_hook(mlx->win_ptr, 6, 0, mouse_move, mlx);*/
+	mlx_hook(mlx->win_ptr, 6, 0, mouse_move, mlx);
 	mlx_hook(mlx->win_ptr, 17, 0, exit_free, mlx);
 	mlx_loop(mlx->mlx_ptr);
 	return (0);
@@ -80,6 +79,10 @@ int				main(void)
 {
 	t_mlx	*mlx;
 	if (!(mlx = (t_mlx *)malloc(sizeof(t_mlx))))
+		return (1);
+	if (!(mlx->camera = (t_camera *)malloc(sizeof(t_camera))))
+		return (1);
+	if (!(mlx->scene = (t_scene *)malloc(sizeof(t_scene))))
 		return (1);
 	mlx_start(mlx);
 	return (0);

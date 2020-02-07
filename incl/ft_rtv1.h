@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 11:37:09 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/05 17:36:33 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/06 16:23:38 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # define IMG_WIDTH 1000
 # define IMG_HEIGHT 1000
 # define FOV 60
-# define ASPECT_RATIO 1.3
-# define THREADS 1
+# define ASPECT_RATIO 1
+# define THREADS 50
 # define RAY_T_MIN 0.0001
 # define RAY_T_MAX 1.0e30
 # define PLANE 1
@@ -52,6 +52,9 @@ typedef struct		s_plane
 {
 	t_point			p;
 	t_vector		normal;
+	int				color;
+	int				index;
+	double			t1;
 }					t_plane;
 
 typedef struct		s_sphere
@@ -59,6 +62,9 @@ typedef struct		s_sphere
 	t_point			p;
 	double			radius;
 	int				color;
+	int				index;
+	double			t1;
+	double			t2;
 }					t_sphere;
 
 typedef struct		s_intersection
@@ -66,17 +72,25 @@ typedef struct		s_intersection
 	t_ray			ray;
 	double			d;
 	int				shape;
+	double			closest;
+	int				color;
 }					t_intersection;
 
 typedef struct		s_camera
 {
 	t_point			origin;
+	t_vector		target;
 	t_vector		forward;
 	t_vector		up;
 	t_vector		right;
 	double			height;
 	double			width;
 }					t_camera;
+
+typedef struct		s_scene
+{
+	int				ambient;
+}					t_scene;
 
 typedef struct		s_mlx
 {
@@ -93,6 +107,12 @@ typedef struct		s_mlx
 	int			endian;
 	int			thread;
 	t_camera	*camera;
+	t_scene		*scene;
+	int			mousemove;
+	int			mouse_1;
+	int			mouse_2;
+	int			mouse_x;
+	int			mouse_y;
 }					t_mlx;
 
 /*
@@ -146,7 +166,7 @@ t_point				*ray_point(t_ray ray, double d);
 ** Shape calculations
 */
 
-int					plane_intersection(t_plane plane, t_intersection x);
+int					plane_intersection(t_plane plane, t_intersection *x);
 int					sphere_intersection(t_sphere sphere, t_intersection *x);
 
 /*
@@ -154,7 +174,7 @@ int					sphere_intersection(t_sphere sphere, t_intersection *x);
 */
 
 t_intersection		copy_intersection(t_intersection x1);
-t_intersection		get_intersection(t_ray ray);
+t_intersection		get_intersection(t_ray ray, t_mlx *mlx);
 int					intersected(t_intersection x);
 t_point				*intersect_pos(t_intersection x, t_ray ray, double d);
 
@@ -168,9 +188,15 @@ void				*draw_view(void *mlx);
 ** Camera
 */
 
-t_camera			*perspective_cam(t_point origin, t_vector target,
+void				perspective_cam(t_point origin, t_vector target,
 						t_mlx *mlx);
 t_ray				camera_ray(t_camera *camera, t_point point);
+
+/*
+** Colors
+*/
+
+int					color_distance(double dist, int color);
 
 /*
 ** Utility functions
@@ -178,6 +204,8 @@ t_ray				camera_ray(t_camera *camera, t_point point);
 
 void				refresh(t_mlx *mlx);
 int					exit_free(t_mlx *mlx);
+void				set_objects(t_mlx *mlx);
+void				add_texts(t_mlx *mlx);
 void				multi_thread(t_mlx *mlx);
 
 /*
@@ -185,5 +213,8 @@ void				multi_thread(t_mlx *mlx);
 */
 
 int					deal_key(int key, t_mlx *mlx);
+int					mouse_move(int x, int y, t_mlx *mlx);
+int					mouse_release(int button, int x, int y, t_mlx *mlx);
+int					mouse_press(int button, int x, int y, t_mlx *mlx);
 
 #endif
