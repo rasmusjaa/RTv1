@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:28:57 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/20 15:00:20 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:26:00 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ static double	spot_shading(t_mlx *mlx, t_intersection *x, int spot)
 	light = vector_minus(mlx->spots[spot].p, x->hitpoint);
 	distance = vector_length(light);
 	light = normalized_vector(light);
-	d = dot_vector(light, x->hitnormal);
+	if (mlx->scene->shading == 1)
+		d = dot_vector(light, x->hitnormal);
+	else
+		d = dot_vector(light, light);
 	intensity = mlx->spots[spot].intensity / distance;
 	if (intensity > 1)
 		intensity = 1.0;
@@ -91,6 +94,17 @@ static double	spot_specular(t_mlx *mlx, t_intersection *x, int spot)
 	double		d;
 	t_vector	camera;
 
+	double		distance;
+	double		intensity;
+	t_vector	light;
+
+	light = vector_minus(mlx->spots[spot].p, x->hitpoint);
+	distance = vector_length(light);
+	intensity = mlx->spots[spot].intensity / distance;
+	if (intensity > 1)
+		intensity = 1.0;
+	intensity = pow(intensity, GAMMA);
+
 	camera = vector_minus(mlx->camera->origin, x->hitpoint);
 	camera = normalized_vector(camera);
 	d = dot_vector(x->hitnormal, camera);
@@ -99,7 +113,7 @@ static double	spot_specular(t_mlx *mlx, t_intersection *x, int spot)
 	{
 		ft_printf("spot %d: specular %f\n",	spot, d);
 	}
-	return (d);
+	return (d * intensity);
 }
 
 void		ray_color(t_mlx *mlx, t_intersection *x)
@@ -112,31 +126,21 @@ void		ray_color(t_mlx *mlx, t_intersection *x)
 
 	d = 0;
 	spot = 0;
-	while (spot < mlx->spot_i)
-	{
-		d += spot_shading(mlx, x, spot);
-		spot++;
-	}
-	if (d > 1)
-		d = 1;
-	spot = 0;
 	specular = 0;
 	while (spot < mlx->spot_i)
 	{
 		shadow = check_shadow(mlx, x, spot);
-		if (shadow == 1)
+		if (shadow != 1 || mlx->scene->shadows == 0)
 		{
-			d *= 0.5;
-		}
-		else
-		{
+			d += spot_shading(mlx, x, spot);
+			if (mlx->scene->speculars == 1)
 			specular = ft_dpow(spot_specular(mlx, x, spot), 32) * 255;
 		}
 		spot++;
 	}
+	d += (double)mlx->scene->ambient / 100;
 	if (d > 1)
 		d = 1;
-
 	// kato noise varjoista
 
 	rgb[0] = ((x->color >> 16) & 0xff) * d + (int)specular;

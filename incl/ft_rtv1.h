@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 11:37:09 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/20 12:40:19 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:17:06 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,10 @@ typedef struct		s_camera
 typedef struct		s_scene
 {
 	int				ambient;
+	int				ambient_rgb;
+	int				speculars;
+	int				shadows;
+	int				shading;
 	char			*name;
 }					t_scene;
 

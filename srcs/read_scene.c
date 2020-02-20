@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 11:17:04 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/19 14:09:29 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:23:35 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,22 +131,34 @@ void		read_sphere_line(t_mlx *mlx, char *line)
 void		read_scene_line(t_mlx *mlx, char *line)
 {
 	int		i;
-	int		arr[3];
-	int		rgb[3];
+	int		arr[7];
+	int		rgb[7];
 
-	int_array_set(arr, 3, 0);
-	int_array_read(arr, 3, line);
-	i = 0;
-	while (i < 3)
+	int_array_set(arr, 7, 0);
+	int_array_read(arr, 7, line);
+	if (arr[0] < 0 || arr[0] > 100)
+			arr[0] = 0;
+	i = 1;
+	while (i < 4)
+	{
+		if (arr[i] < 0 || arr[i] > 1)
+			arr[i] = 0;
+		i++;
+	}
+	while (i < 7)
 	{
 		if (arr[i] < 0 || arr[i] > 255)
 			arr[i] = 0;
 		i++;
 	}
-	rgb[0] = arr[0];
-	rgb[1] = arr[1];
-	rgb[2] = arr[2];
-	mlx->scene->ambient = rgb[0]<<16 | rgb[1]<<8 | rgb[2];
+	mlx->scene->ambient = arr[0];
+	mlx->scene->speculars = arr[1];
+	mlx->scene->shadows = arr[2];
+	mlx->scene->shading = arr[3];
+	rgb[0] = arr[4];
+	rgb[1] = arr[5];
+	rgb[2] = arr[6];
+	mlx->scene->ambient_rgb = rgb[0]<<16 | rgb[1]<<8 | rgb[2];
 }
 
 void		read_camera_line(t_mlx *mlx, char *line)
