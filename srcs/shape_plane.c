@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:29:43 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/06 16:01:42 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/10 13:05:15 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int			plane_intersection(t_plane plane, t_intersection *x)
 	if (t < x->closest)
 	{
 		x->closest = t;
-		x->color = color_distance(t, plane.color);
+		x->hitpoint = ray_point(x->ray, t);
+		x->hitnormal = plane.normal;
+		x->color = plane.color;
 		x->shape = PLANE;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 16:37:33 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/06 16:22:36 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/07 17:19:19 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,11 @@ int				intersected(t_intersection x)
 	return (x.shape);
 }
 
-t_point			*intersect_pos(t_intersection x, t_ray ray, double d)
+t_point			intersect_pos(t_intersection x, t_ray ray, double d)
 {
-	t_point			*point;
+	t_point			point;
 
-	point = NULL;
-	if (intersected(x) != 0)
-	{
-		point = ray_point(ray, d);
-		return (point);
-	}
-	free(point);
-	return (NULL);
+	x.closest = x.closest;
+	point = ray_point(ray, d);
+	return (point);
 }

@@ -6,7 +6,7 @@
 #    By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/19 17:57:45 by rjaakonm          #+#    #+#              #
-#    Updated: 2019/12/17 13:34:11 by rjaakonm         ###   ########.fr        #
+#    Updated: 2020/02/20 13:57:07 by rjaakonm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,6 +80,7 @@ SRCS =	srcs/ft_lstiter.c \
 		srcs/ft_strmap.c \
 		srcs/ft_get_next_line.c \
 		srcs/ft_pow.c \
+		srcs/ft_dpow.c \
 		srcs/ft_strnew_c.c \
 		srcs/ft_base_ltoa.c \
 		srcs/ft_base_ultoa.c \

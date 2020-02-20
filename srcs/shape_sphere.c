@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:41:55 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/06 14:32:47 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/20 14:52:59 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,20 @@ int			sphere_intersection(t_sphere sphere, t_intersection *x)
 	}
 	t1 = (-1 * quadratic.y - sqrt(d)) / (2 * quadratic.x);
 	t2 = (-1 * quadratic.y + sqrt(d)) / (2 * quadratic.x);
-	if (t1 > 0 && t1 < x->closest)
+	if (t1 > RAY_T_MIN && t1 < x->closest)
 	{
 		x->closest = t1;
-		x->color = color_distance(t1, sphere.color);
+		x->hitpoint = ray_point(x->ray, t1);
+		x->hitnormal = normalized_vector(vector_minus(x->hitpoint, sphere.p));
+		x->color = sphere.color;
+		x->shape = SPHERE;
+	}
+	else if (t2 > RAY_T_MIN && t2 < x->closest)
+	{
+		x->closest = t2;
+		x->hitpoint = ray_point(x->ray, t2);
+		x->hitnormal = normalized_vector(vector_minus(x->hitpoint, sphere.p));
+		x->color = sphere.color;
 		x->shape = SPHERE;
 	}
 	return (2);

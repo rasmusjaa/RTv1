@@ -6,7 +6,7 @@
 #    By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/16 14:55:48 by rjaakonm          #+#    #+#              #
-#    Updated: 2020/02/06 14:48:30 by rjaakonm         ###   ########.fr        #
+#    Updated: 2020/02/20 12:31:35 by rjaakonm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS =	srcs/main.c \
 		srcs/keyboard.c \
 		srcs/mouse.c \
 		srcs/utilities.c \
+		srcs/read_scene.c \
 		srcs/color.c
 
 FLAGS = -Wall -Wextra -Werror
@@ -66,4 +67,4 @@ re: fclean all
 
 run:
 	gcc $(FLAGS) $(INCL) $(SRCS) $(LIB) -o $(NAME)
-	./$(NAME)
+	./$(NAME) scene_1

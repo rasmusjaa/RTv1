@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 18:35:28 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/07 14:13:50 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:40:42 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +22,31 @@ int		get_color(int x, int y, t_mlx *mlx)
 {
 	t_vector	target;
 	t_ray		ray;
+	t_intersection ix;
+	int		i;
 
 	target.x = 2.0 * x / (mlx->img_width - 1) - 1.0;
 	target.y = -2.0 * y / (mlx->img_height - 1) + 1;
-
 	ray = camera_ray(mlx->camera, target);
-
-// loop ray against all shapes
-	t_sphere	sphere;
-	sphere.radius = 2;
-	sphere.p.x = 0;
-	sphere.p.y = 0;
-	sphere.p.z = -5;
-	sphere.color = 0x0000ff;
-
-	t_sphere	sphere2;
-	sphere2.radius = 1;
-	sphere2.p.x = 0;
-	sphere2.p.y = 0;
-	sphere2.p.z = -3;
-	sphere2.color = 0x00ff00;
-
-	t_plane		plane;
-	plane.p = set_vector(0, -1, -3);
-	plane.normal = set_vector(1, 1 , 1);
-	plane.color = 0xff0000;
-
-	t_intersection ix;
-
 	ix = get_intersection(ray, mlx);
 
-	sphere_intersection(sphere, &ix);
-	sphere_intersection(sphere2, &ix);
-	plane_intersection(plane, &ix);
+	i = 0;
+	while (i < 10)
+	{
+		if (i < mlx->sphere_i)
+			sphere_intersection(mlx->spheres[i], &ix);
+		if (i < mlx->plane_i)
+			plane_intersection(mlx->planes[i], &ix);
+		i++;
+	}
+	if (mlx->mouse_3 == 1)
+	{
+		ft_printf("\n*** CHECK X %d Y %d ***\n", x, y);
+		ft_printf("distance to object: %f\n", ix.closest);
+		ft_printf("hitpoint %.3f %.3f %.3f\n", ix.hitpoint.x, ix.hitpoint.y, ix.hitpoint.z);
+		ft_printf("object color %#.6x\n", ix.color);
+	}
+	ray_color(mlx, &ix);
 	return (ix.color);
 }
 

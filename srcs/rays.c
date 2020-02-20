@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 16:37:33 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/03 19:28:03 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/07 17:12:04 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,12 @@ t_ray	copy_ray(t_ray ray1)
 	return (ray2);
 }
 
-t_point	*ray_point(t_ray ray, double d)
+t_point	ray_point(t_ray ray, double d)
 {
-	t_point	*point;
+	t_point	point;
 
-	if (!(point = (t_point *)malloc(sizeof(t_point))))
-		return (NULL);
-	point->x = d * ray.direction.x + ray.start.x;
-	point->y = d * ray.direction.y + ray.start.y;
-	point->z = d * ray.direction.z + ray.start.z;
+	point.x = d * ray.direction.x + ray.start.x;
+	point.y = d * ray.direction.y + ray.start.y;
+	point.z = d * ray.direction.z + ray.start.z;
 	return (point);
 }

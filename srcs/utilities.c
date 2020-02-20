@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 17:28:48 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/07 15:30:02 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/19 13:53:52 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ int			exit_free(t_mlx *mlx)
 
 void		set_objects(t_mlx *mlx)
 {
-//	read_scene(mlx);
-	ft_printf("origin %f %f %f\n", mlx->camera->origin.x, mlx->camera->origin.y, mlx->camera->origin.z);
-	ft_printf("cam target %f %f %f\n", mlx->camera->target.x, mlx->camera->target.y, mlx->camera->target.z);
+	if (mlx->camera->origin.x == mlx->camera->target.x &&
+		mlx->camera->origin.y == mlx->camera->target.y &&
+		mlx->camera->origin.z == mlx->camera->target.z)
+	mlx->camera->target.z = mlx->camera->origin.z - 1;
 	perspective_cam(mlx->camera->origin, mlx->camera->target, mlx);
 //	ft_printf("forward %f %f %f\n", mlx->camera.forward.x, mlx->camera.forward.y, mlx->camera.forward.z);
 //	ft_printf("right %f %f %f\n", mlx->camera.right.x, mlx->camera.right.y, mlx->camera.right.z);
@@ -44,13 +45,30 @@ void		set_objects(t_mlx *mlx)
 
 void		add_texts(t_mlx *mlx)
 {
-	char	str[6] = "testi\0";
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 30, 0xffffff,
 		"MOVE CAMERA:");
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 50, 0xffffff,
-		"Arrows, numpad +/-");
+		"Arrows, Numpad +-");
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 70, 0xffffff,
-		"EXIT: Esc");
+		"MOVE TARGET:");
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 90, 0xffffff,
-		str);
+		"Numpad 2468 */");
+	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 110, 0xffffff,
+		"EXIT: Esc");
+	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 810, 0xffffff,
+		"CAMERA POSITION");
+	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 830, 0xffffff,
+		ft_itoa((int)mlx->camera->origin.x));
+	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 850, 0xffffff,
+		ft_itoa((int)mlx->camera->origin.y));
+	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 870, 0xffffff,
+		ft_itoa((int)mlx->camera->origin.z));
+	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 890, 0xffffff,
+		"CAMERA TARGET");
+	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 910, 0xffffff,
+		ft_itoa((int)mlx->camera->target.x));
+	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 930, 0xffffff,
+		ft_itoa((int)mlx->camera->target.y));
+	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 950, 0xffffff,
+		ft_itoa((int)mlx->camera->target.z));
 }

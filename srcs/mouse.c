@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:37:11 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/07 15:59:30 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:34:39 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 int			mouse_move(int x, int y, t_mlx *mlx)
 {
-/*	if (mlx->mouse_1 == 1)
+
+	if (mlx->mouse_1 == 1)
 	{
-		mlx->move_x -= mlx->mouse_x - x;
-		mlx->move_y -= mlx->mouse_y - y;
+		mlx->camera->target.x -= 1.0 * (mlx->mouse_x - x) / 10.0;
+		mlx->camera->target.y += 1.0 * (mlx->mouse_y - y) / 10.0;
 		refresh(mlx);
 	}
 	else if (mlx->mouse_2 == 1)
 	{
-		mlx->color_x -= mlx->mouse_x - x;
-		mlx->color_x -= mlx->mouse_y - y;
-		if (mlx->color_x < 1 || mlx->color_x > 10000)
-			mlx->color_x = 1;
+		mlx->camera->origin.x -= 1.0 * (mlx->mouse_x - x) / 10.0;
+		mlx->camera->origin.y += 1.0 * (mlx->mouse_y - y) / 10.0;
 		refresh(mlx);
 	}
+	/*
 	else if (mlx->mousemove == 1)
 	{
 		mlx->z_r -= (float)(mlx->mouse_x - x) / 200;
@@ -50,41 +50,14 @@ int			mouse_release(int button, int x, int y,  t_mlx *mlx)
 	return (0);
 }
 
-static void	mouse_press2(int button, int x, int y, t_mlx *mlx)
+static void	mouse_wheel(int button, int x, int y, t_mlx *mlx)
 {
-	if (button == 1)
-		mlx->mouse_1 = 1;
+	if (button == 3)
+		mlx->mouse_3 = 1;
+	if (x >= 0 && y >= 0 && x < IMG_WIDTH && y < IMG_HEIGHT)
+		get_color(x, y, mlx);
+	mlx->mouse_3 = 0;
 
-	t_vector	target;
-	t_ray		ray;
-
-	target.x = 2.0 * x / (mlx->img_width - 1) - 1.0;
-	target.y = -2.0 * y / (mlx->img_height - 1) + 1;
-
-	ray = camera_ray(mlx->camera, target);
-
-	t_sphere	sphere;
-	sphere.radius = 2;
-	sphere.p.x = 0;
-	sphere.p.y = 0;
-	sphere.p.z = -5;
-	sphere.color = 0x0000ff;
-
-	t_sphere	sphere2;
-	sphere2.radius = 1;
-	sphere2.p.x = 0;
-	sphere2.p.y = 0;
-	sphere2.p.z = -3;
-	sphere2.color = 0x00ff00;
-
-	t_intersection ix;
-
-	ix = get_intersection(ray, mlx);
-
-	sphere_intersection(sphere, &ix);
-	sphere_intersection(sphere2, &ix);
-	ft_printf("distance to object: %f\n", ix.closest);
-	ft_printf("color %#.6x\n", ix.color);
 /*	mlx->move_x -= (x - mlx->img_width / 2);
 	mlx->move_y -= (y - mlx->img_height / 2);
 	if (button == 4)
@@ -112,7 +85,7 @@ int			mouse_press(int button, int x, int y, t_mlx *mlx)
 	else if (button == 2)
 		mlx->mouse_2 = 1;
 	else if (button == 3 || button == 4 || button == 5)
-		mouse_press2(button, x, y, mlx);
+		mouse_wheel(button, x, y, mlx);
 //	refresh(mlx);
 	return (0);
 }
