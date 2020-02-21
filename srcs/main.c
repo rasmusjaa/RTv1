@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 16:23:37 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 12:29:07 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 18:52:47 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static void		mlx_values(t_mlx *mlx)
 	mlx->img_height = IMG_HEIGHT;
 	mlx->sphere_i = 0;
 	mlx->plane_i = 0;
+	mlx->cylinder_i = 0;
+	mlx->cone_i = 0;
 	mlx->spot_i = 0;
 	mlx->camera->origin = set_vector(0, 0, 5);
 	mlx->camera->target = set_vector(0, 0, -5);
@@ -65,6 +67,8 @@ static int		handle_expose(void	*mlx2)
 	mlx = (t_mlx *)mlx2;
 	mlx->sphere_i = 0;
 	mlx->plane_i = 0;
+	mlx->cylinder_i = 0;
+	mlx->cone_i = 0;
 	mlx->spot_i = 0;
 	mlx->camera->origin = set_vector(0, 0, 0);
 	mlx->camera->target = set_vector(0, 0, -1);

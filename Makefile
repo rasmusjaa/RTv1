@@ -6,7 +6,7 @@
 #    By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/16 14:55:48 by rjaakonm          #+#    #+#              #
-#    Updated: 2020/02/20 12:31:35 by rjaakonm         ###   ########.fr        #
+#    Updated: 2020/02/21 18:13:01 by rjaakonm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ SRCS =	srcs/main.c \
 		srcs/rays.c \
 		srcs/shape_plane.c \
 		srcs/shape_sphere.c \
+		srcs/shape_cylinder.c \
+		srcs/shape_cone.c \
 		srcs/camera.c \
 		srcs/keyboard.c \
 		srcs/mouse.c \

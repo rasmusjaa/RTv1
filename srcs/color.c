@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:28:57 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 17:26:49 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 18:40:32 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ int	check_shadow(t_mlx *mlx, t_intersection *x, int spot)
 			sphere_intersection(mlx->spheres[i], &ix);
 		if (i < mlx->plane_i)
 			plane_intersection(mlx->planes[i], &ix);
+		if (i < mlx->cylinder_i)
+			cylinder_intersection(mlx->cylinders[i], &ix);
+		if (i < mlx->cone_i)
+			cone_intersection(mlx->cones[i], &ix);
 		i++;
 	}
 
@@ -102,7 +106,8 @@ static double	spot_specular(t_mlx *mlx, t_intersection *x, int spot)
 		intensity = 1.0;
 	if (mlx->mouse_3 == 1)
 	{
-		ft_printf("spot %d: len %f intense %f\n", spot, vector_length(light), intensity);
+		ft_printf("spot %d: i %f len %f intense %f\n",
+		mlx->spots[spot].intensity, spot, vector_length(light), intensity);
 	}
 
 	camera = vector_minus(x->hitpoint, mlx->camera->origin);
@@ -119,7 +124,7 @@ static double	spot_specular(t_mlx *mlx, t_intersection *x, int spot)
 	{
 		ft_printf("spot %d: specular %f\n",	spot, d);
 	}
-	return (d);
+	return (d * intensity);
 }
 
 void		ray_color(t_mlx *mlx, t_intersection *x)

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 11:37:09 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 16:04:07 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:15:12 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,28 @@ typedef struct		s_sphere
 	double			t2;
 	int				i;
 }					t_sphere;
+
+typedef struct		s_cylinder
+{
+	t_point			p1;
+	t_point			p2;
+	double			radius;
+	int				color;
+	double			t1;
+	double			t2;
+	int				i;
+}					t_cylinder;
+
+typedef struct		s_cone
+{
+	t_point			p1;
+	t_point			p2;
+	double			radius;
+	int				color;
+	double			t1;
+	double			t2;
+	int				i;
+}					t_cone;
 
 typedef struct		s_spot
 {
@@ -134,6 +156,10 @@ typedef struct		s_mlx
 	int			sphere_i;
 	t_plane		planes[10];
 	int			plane_i;
+	t_cylinder	cylinders[10];
+	int			cylinder_i;
+	t_cone		cones[10];
+	int			cone_i;
 	t_spot		spots[10];
 	int			spot_i;
 	int			mousemove;
@@ -197,6 +223,8 @@ t_point				ray_point(t_ray ray, double d);
 
 int					plane_intersection(t_plane plane, t_intersection *x);
 int					sphere_intersection(t_sphere sphere, t_intersection *x);
+int					cylinder_intersection(t_cylinder cone, t_intersection *x);
+int					cone_intersection(t_cone cone, t_intersection *x);
 
 /*
 ** Intersections

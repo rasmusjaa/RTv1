@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 18:35:28 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/19 15:40:42 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:16:47 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ int		get_color(int x, int y, t_mlx *mlx)
 			sphere_intersection(mlx->spheres[i], &ix);
 		if (i < mlx->plane_i)
 			plane_intersection(mlx->planes[i], &ix);
+		if (i < mlx->cylinder_i)
+			cylinder_intersection(mlx->cylinders[i], &ix);
+		if (i < mlx->cone_i)
+			cone_intersection(mlx->cones[i], &ix);
 		i++;
 	}
 	if (mlx->mouse_3 == 1)
@@ -44,7 +48,7 @@ int		get_color(int x, int y, t_mlx *mlx)
 		ft_printf("\n*** CHECK X %d Y %d ***\n", x, y);
 		ft_printf("distance to object: %f\n", ix.closest);
 		ft_printf("hitpoint %.3f %.3f %.3f\n", ix.hitpoint.x, ix.hitpoint.y, ix.hitpoint.z);
-		ft_printf("object color %#.6x\n", ix.color);
+		ft_printf("object %d color %#.6x\n", ix.shape, ix.color);
 	}
 	ray_color(mlx, &ix);
 	return (ix.color);

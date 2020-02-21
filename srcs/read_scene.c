@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 11:17:04 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 15:40:57 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:17:41 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,66 @@ void		read_sphere_line(t_mlx *mlx, char *line)
 	mlx->spheres[mlx->sphere_i].color = arr[4]<<16 | arr[5]<<8 | arr[6];
 }
 
+void		read_cylinder_line(t_mlx *mlx, char *line)
+{
+	int		i;
+	int		arr[10];
+
+	int_array_set(arr, 10, 0);
+	int_array_read(arr, 10, line);
+	i = 0;
+	while (i < 4)
+	{
+		if (arr[i] < -100 || arr[i] > 100)
+			arr[i] = 0;
+		i++;
+	}
+	while (i < 10)
+	{
+		if (arr[i] < 0 || arr[i] > 255)
+			arr[i] = 0;
+		i++;
+	}
+	mlx->cylinders[mlx->cylinder_i].p1.x = arr[0];
+	mlx->cylinders[mlx->cylinder_i].p1.y = arr[1];
+	mlx->cylinders[mlx->cylinder_i].p1.z = arr[2];
+	mlx->cylinders[mlx->cylinder_i].p2.x = arr[3];
+	mlx->cylinders[mlx->cylinder_i].p2.y = arr[4];
+	mlx->cylinders[mlx->cylinder_i].p2.z = arr[5];
+	mlx->cylinders[mlx->cylinder_i].radius = arr[6];
+	mlx->cylinders[mlx->cylinder_i].color = arr[7]<<16 | arr[8]<<8 | arr[9];
+}
+
+void		read_cone_line(t_mlx *mlx, char *line)
+{
+	int		i;
+	int		arr[10];
+
+	int_array_set(arr, 10, 0);
+	int_array_read(arr, 10, line);
+	i = 0;
+	while (i < 4)
+	{
+		if (arr[i] < -100 || arr[i] > 100)
+			arr[i] = 0;
+		i++;
+	}
+	while (i < 10)
+	{
+		if (arr[i] < 0 || arr[i] > 255)
+			arr[i] = 0;
+		i++;
+	}
+		mlx->cones[mlx->cone_i].p1.x = arr[0];
+	mlx->cones[mlx->cone_i].p1.y = arr[1];
+	mlx->cones[mlx->cone_i].p1.z = arr[2];
+	mlx->cones[mlx->cone_i].p2.x = arr[3];
+	mlx->cones[mlx->cone_i].p2.y = arr[4];
+	mlx->cones[mlx->cone_i].p2.z = arr[5];
+	mlx->cones[mlx->cone_i].radius = arr[6];
+	mlx->cones[mlx->cone_i].color = arr[7]<<16 | arr[8]<<8 | arr[9];
+}
+
 void		read_scene_line(t_mlx *mlx, char *line)
 {
 	int		i;
@@ -209,6 +269,17 @@ void		read_scene(t_mlx *mlx)
 		{
 			read_plane_line(mlx, line);
 			mlx->plane_i++;
+		}
+		else if (ft_strncmp("cylinder", line, 8) == 0)
+		{
+			read_cylinder_line(mlx, line);
+			mlx->cylinder_i++;
+		}
+		else if (ft_strncmp("cone", line, 4) == 0)
+		{
+			ft_putendl("cone");
+			read_cone_line(mlx, line);
+			mlx->cone_i++;
 		}
 		else if (ft_strncmp("spot", line, 4) == 0)
 		{
