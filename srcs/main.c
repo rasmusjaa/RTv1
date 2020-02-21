@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 16:23:37 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/20 16:17:41 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 12:29:07 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,16 @@ static int		handle_expose(void	*mlx2)
 	mlx->sphere_i = 0;
 	mlx->plane_i = 0;
 	mlx->spot_i = 0;
-	mlx->camera->origin = set_vector(0, 0, 5);
-	mlx->camera->target = set_vector(0, 0, -5);
+	mlx->camera->origin = set_vector(0, 0, 0);
+	mlx->camera->target = set_vector(0, 0, -1);
+	mlx->camera->rot = set_vector(0, 0, 0);
 	mlx->scene->ambient = 0;
 	mlx->scene->speculars = 0;
 	mlx->scene->shadows = 0;
 	mlx->scene->shading = 0;
-	mlx->scene->ambient_rgb = 0x000000;
+	mlx->scene->ambient_r = 0;
+	mlx->scene->ambient_g = 0;
+	mlx->scene->ambient_b = 0;
 	read_scene((t_mlx *)mlx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:28:57 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/20 16:26:00 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:37:20 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,11 +141,10 @@ void		ray_color(t_mlx *mlx, t_intersection *x)
 	d += (double)mlx->scene->ambient / 100;
 	if (d > 1)
 		d = 1;
-	// kato noise varjoista
 
-	rgb[0] = ((x->color >> 16) & 0xff) * d + (int)specular;
-	rgb[1] = ((x->color >> 8) & 0xff) * d + (int)specular;
-	rgb[2] = (x->color & 0xff) * d + (int)specular;
+	rgb[0] = ((x->color >> 16) & 0xff) * d + (int)specular + mlx->scene->ambient_r;
+	rgb[1] = ((x->color >> 8) & 0xff) * d + (int)specular + mlx->scene->ambient_g;
+	rgb[2] = (x->color & 0xff) * d + (int)specular + mlx->scene->ambient_b;
 
 	if (rgb[0] > 255)
 		rgb[0] = 255;
@@ -153,12 +152,6 @@ void		ray_color(t_mlx *mlx, t_intersection *x)
 		rgb[1] = 255;
 	if (rgb[2] > 255)
 		rgb[2] = 255;
-
-	if (mlx->mouse_3 == 1)
-	{
-		ft_printf("r %d\n",	rgb[0]);
-	}
-
 	x->color = rgb[0]<<16 | rgb[1]<<8 | rgb[2];
 
 }

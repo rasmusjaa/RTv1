@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 11:37:09 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/20 16:17:06 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 12:28:17 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct		s_camera
 {
 	t_point			origin;
 	t_vector		target;
+	t_vector		rot;
 	t_vector		forward;
 	t_vector		up;
 	t_vector		right;
@@ -102,7 +103,9 @@ typedef struct		s_camera
 typedef struct		s_scene
 {
 	int				ambient;
-	int				ambient_rgb;
+	int				ambient_r;
+	int				ambient_g;
+	int				ambient_b;
 	int				speculars;
 	int				shadows;
 	int				shading;
@@ -238,6 +241,8 @@ int					exit_free(t_mlx *mlx);
 void				set_objects(t_mlx *mlx);
 void				add_texts(t_mlx *mlx);
 void				multi_thread(t_mlx *mlx);
+t_vector			rotate_vector(t_vector origin, t_vector target,
+						t_vector rot);
 
 /*
 ** Controls

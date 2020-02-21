@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 17:28:48 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/19 13:53:52 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 12:55:56 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void		set_objects(t_mlx *mlx)
 		mlx->camera->origin.y == mlx->camera->target.y &&
 		mlx->camera->origin.z == mlx->camera->target.z)
 	mlx->camera->target.z = mlx->camera->origin.z - 1;
+	mlx->camera->target = rotate_vector(mlx->camera->origin,
+	mlx->camera->target, mlx->camera->rot);
 	perspective_cam(mlx->camera->origin, mlx->camera->target, mlx);
-//	ft_printf("forward %f %f %f\n", mlx->camera.forward.x, mlx->camera.forward.y, mlx->camera.forward.z);
-//	ft_printf("right %f %f %f\n", mlx->camera.right.x, mlx->camera.right.y, mlx->camera.right.z);
-//	ft_printf("up %f %f %f\n", mlx->camera.up.x, mlx->camera.up.y, mlx->camera.up.z);
-//	ft_printf("height %f width %f\n", mlx->camera.height, mlx->camera.width);
+	mlx->camera->rot.x = 0;
+	mlx->camera->rot.y = 0;
 }
 
 void		add_texts(t_mlx *mlx)
@@ -71,4 +71,32 @@ void		add_texts(t_mlx *mlx)
 		ft_itoa((int)mlx->camera->target.y));
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 950, 0xffffff,
 		ft_itoa((int)mlx->camera->target.z));
+}
+
+t_vector	rotate_vector(t_vector origin, t_vector target, t_vector rot)
+{
+	t_vector	temp;
+
+//	printf("original  %f %f %f\n", target.x, target.y, target.z);
+
+	target = vector_minus(target, origin);
+
+	rot.x *= -1 * M_PI / 180.0;
+	rot.y *= -1 * M_PI / 180.0;
+	rot.z *= -1 * M_PI / 180.0;
+	temp.y = target.y;
+	target.y = target.y * cos(rot.x) + target.z * sin(rot.x);
+	target.z = -1 * temp.y * sin(rot.x) + target.z * cos(rot.x);
+	temp.x = target.x;
+	target.x = target.x * cos(rot.y) + target.z * sin(rot.y);
+	target.z = -1 * temp.x * sin(rot.y) + target.z * cos(rot.y);
+	temp.x = target.x;
+	target.x = target.x * cos(rot.z) - target.y * sin(rot.z);
+	target.y = temp.x * sin(rot.z) + target.y * cos(rot.z);
+
+	target = vector_plus(target, origin);
+
+//	printf("rotated  %f %f %f\n", target.x, target.y, target.z);
+
+	return (target);
 }

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 11:17:04 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/20 16:23:35 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:38:11 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ void		read_scene_line(t_mlx *mlx, char *line)
 {
 	int		i;
 	int		arr[7];
-	int		rgb[7];
 
 	int_array_set(arr, 7, 0);
 	int_array_read(arr, 7, line);
@@ -155,10 +154,9 @@ void		read_scene_line(t_mlx *mlx, char *line)
 	mlx->scene->speculars = arr[1];
 	mlx->scene->shadows = arr[2];
 	mlx->scene->shading = arr[3];
-	rgb[0] = arr[4];
-	rgb[1] = arr[5];
-	rgb[2] = arr[6];
-	mlx->scene->ambient_rgb = rgb[0]<<16 | rgb[1]<<8 | rgb[2];
+	mlx->scene->ambient_r = arr[4];
+	mlx->scene->ambient_g = arr[5];
+	mlx->scene->ambient_b = arr[6];
 }
 
 void		read_camera_line(t_mlx *mlx, char *line)

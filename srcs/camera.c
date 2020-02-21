@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:18:45 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/07 16:11:44 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/20 17:00:15 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,8 @@ t_ray		camera_ray(t_camera *camera, t_point target)
 	ray.direction = vector_plus(ray.direction, v1);
 	ray.direction = vector_plus(ray.direction, v2);
 	ray.direction = normalized_vector(ray.direction);
+
+
+
 	return (ray);
 }

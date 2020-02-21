@@ -5,11 +5,11 @@
 # scene speculars, shadows and shading 0 or 1
 # other numbers between -100 and 100
 #
-# CAMERA	origin xyz			target
-camera		0	3	0			0	3	-15
+# CAMERA	origin xyz			target			rotation xyz
+camera		0	3	0			0	3	-1		0	0	0
 
 # SCENE		ambient	speculars	shadows	shading	color-R	color-G	color-B
-scene		10		1			1		1		255		0		255
+scene		10		1			1		1		0		0		0
 
 # SPHERES	origin xyz			radius			color-R	color-G	color-B
 sphere		0	3	-16			4				0		255		0
@@ -23,5 +23,5 @@ plane		0	-1	0			0	1	0		100		0		0
 plane		0	0	-20			0	0	1		0		100		100
 
 # SPOTS		origin xyz			intensity		color-R	color-G	color-B
-spot		-10	10	-10			10				100		100		100
-spot		10	10	-10			80				100		100		100
+spot		-10	10	-10			100				100		100		100
+spot		10	10	-10			10				100		100		100
