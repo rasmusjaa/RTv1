@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 11:37:09 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 12:28:17 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:04:07 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define RAY_T_MIN 0.00001
 # define RAY_T_MAX 1.0e30
 # define GAMMA 2.2
+# define DISTANCE 5.0
 # define PLANE 1
 # define SPHERE 2
 # define CYLINDER 3
@@ -73,6 +74,7 @@ typedef struct		s_spot
 {
 	t_point			p;
 	double			intensity;
+	int				type;
 	int				color;
 	int				i;
 }					t_spot;

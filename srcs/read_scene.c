@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 11:17:04 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/20 16:38:11 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 15:40:57 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void		int_array_read(int *arr, int n, char *line)
 void		read_spot_line(t_mlx *mlx, char *line)
 {
 	int		i;
-	int		arr[7];
+	int		arr[8];
 
-	int_array_set(arr, 7, 0);
-	int_array_read(arr, 7, line);
+	int_array_set(arr, 8, 0);
+	int_array_read(arr, 8, line);
 	i = 0;
 	while (i < 4)
 	{
@@ -59,7 +59,7 @@ void		read_spot_line(t_mlx *mlx, char *line)
 			arr[i] = 0;
 		i++;
 	}
-	while (i < 7)
+	while (i < 8)
 	{
 		if (arr[i] < 0 || arr[i] > 255)
 			arr[i] = 0;
@@ -69,7 +69,8 @@ void		read_spot_line(t_mlx *mlx, char *line)
 	mlx->spots[mlx->spot_i].p.y = arr[1];
 	mlx->spots[mlx->spot_i].p.z = arr[2];
 	mlx->spots[mlx->spot_i].intensity = arr[3];
-	mlx->spots[mlx->spot_i].color = arr[4]<<16 | arr[5]<<8 | arr[6];
+	mlx->spots[mlx->spot_i].type = arr[4] != 0 ? 1 : 0;
+	mlx->spots[mlx->spot_i].color = arr[5]<<16 | arr[6]<<8 | arr[7];
 }
 
 void		read_plane_line(t_mlx *mlx, char *line)

@@ -13,15 +13,18 @@ scene		10		1			1		1		0		0		0
 
 # SPHERES	origin xyz			radius			color-R	color-G	color-B
 sphere		0	3	-16			4				0		255		0
-sphere		-4	6	-15			1				0		0		255
-sphere		4	6	-15			1				0		0		255
+sphere		-4	6	-14			1				0		0		255
+sphere		4	6	-14			1				0		0		255
 sphere		-1	4	-13			1				255		255		255
 sphere		1	4	-13			1				255		255		255
 
 # PLANES	origin xyz			plane normal	color-R	color-G	color-B
 plane		0	-1	0			0	1	0		100		0		0
-plane		0	0	-20			0	0	1		0		100		100
+plane		0	0	-45			0	0	1		0		100		100
 
-# SPOTS		origin xyz			intensity		color-R	color-G	color-B
-spot		-10	10	-10			100				100		100		100
-spot		10	10	-10			10				100		100		100
+# spot with type 0 == lamp, type 1 == sun
+# SPOTS		origin xyz			power	type	color-R	color-G	color-B
+spot		-10	10	-10			50		0		100		100		100
+spot		10	10	-10			100		0		100		100		100
+# spot		5	8	0			10		1		100		100		100
+

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 17:33:05 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 13:15:17 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 15:14:00 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ static void	deal_move_target(int key, t_mlx *mlx)
 {
 	if (key == 86)
 		mlx->camera->target.x -= 1;
-	else if (key == 88)
+	if (key == 88)
 		mlx->camera->target.x += 1;
-	else if (key == 91)
+	if (key == 91)
 		mlx->camera->target.y += 1;
-	else if (key == 84)
+	if (key == 84)
 		mlx->camera->target.y -= 1;
-	else if (key == 75)
+	if (key == 75)
 		mlx->camera->target.z -= 1;
-	else if (key == 67)
+	if (key == 67)
 		mlx->camera->target.z += 1;
 	refresh(mlx);
 }
@@ -43,13 +43,13 @@ static void	deal_move_camera(int key, t_mlx *mlx)
 	}
 	else if (key == 126)
 	{
-		mlx->camera->origin.z -= 1;
-		mlx->camera->target.z -= 1;
+		mlx->camera->origin = vector_plus(mlx->camera->origin, mlx->camera->forward);
+		mlx->camera->target = vector_plus(mlx->camera->target, mlx->camera->forward);
 	}
 	else if (key == 125)
 	{
-		mlx->camera->origin.z += 1;
-		mlx->camera->target.z += 1;
+		mlx->camera->origin = vector_minus(mlx->camera->origin, mlx->camera->forward);
+		mlx->camera->target = vector_minus(mlx->camera->target, mlx->camera->forward);
 	}
 	else if (key == 78)
 	{

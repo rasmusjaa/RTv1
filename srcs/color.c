@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:28:57 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/20 16:37:20 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 17:26:49 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	check_shadow(t_mlx *mlx, t_intersection *x, int spot)
 			plane_intersection(mlx->planes[i], &ix);
 		i++;
 	}
-
 
 	double		len;
 	t_vector	light;
@@ -71,11 +70,11 @@ static double	spot_shading(t_mlx *mlx, t_intersection *x, int spot)
 	if (mlx->scene->shading == 1)
 		d = dot_vector(light, x->hitnormal);
 	else
-		d = dot_vector(light, light);
-	intensity = mlx->spots[spot].intensity / distance;
-	if (intensity > 1)
-		intensity = 1.0;
-	intensity = pow(intensity, GAMMA);
+		d = 1;
+	if (mlx->spots[spot].type == 1)
+		intensity = mlx->spots[spot].intensity / 100;
+	else
+		intensity = mlx->spots[spot].intensity * (1 / (1 + distance + pow(distance, 2)));
 	if (mlx->mouse_3 == 1)
 	{
 		ft_printf("spot %d: power %f distance %f intensity %f ",
@@ -93,27 +92,34 @@ static double	spot_specular(t_mlx *mlx, t_intersection *x, int spot)
 {
 	double		d;
 	t_vector	camera;
-
-	double		distance;
-	double		intensity;
 	t_vector	light;
 
-	light = vector_minus(mlx->spots[spot].p, x->hitpoint);
-	distance = vector_length(light);
-	intensity = mlx->spots[spot].intensity / distance;
+	double		intensity;
+
+	light = vector_minus(x->hitpoint, mlx->spots[spot].p);
+	intensity = mlx->spots[spot].intensity / vector_length(light);
 	if (intensity > 1)
 		intensity = 1.0;
-	intensity = pow(intensity, GAMMA);
+	if (mlx->mouse_3 == 1)
+	{
+		ft_printf("spot %d: len %f intense %f\n", spot, vector_length(light), intensity);
+	}
 
-	camera = vector_minus(mlx->camera->origin, x->hitpoint);
+	camera = vector_minus(x->hitpoint, mlx->camera->origin);
 	camera = normalized_vector(camera);
-	d = dot_vector(x->hitnormal, camera);
+	t_vector reflection;
 
+	reflection = vector_multiply_nb(x->hitnormal, 2 * dot_vector(x->hitnormal, light));
+	reflection = vector_minus(reflection, light);
+	reflection = normalized_vector(reflection);
+	d = dot_vector(reflection, camera); // camera to light for cool effect
+	if (d < 0)
+		d = 0;
 	if (mlx->mouse_3 == 1)
 	{
 		ft_printf("spot %d: specular %f\n",	spot, d);
 	}
-	return (d * intensity);
+	return (d);
 }
 
 void		ray_color(t_mlx *mlx, t_intersection *x)
@@ -134,7 +140,7 @@ void		ray_color(t_mlx *mlx, t_intersection *x)
 		{
 			d += spot_shading(mlx, x, spot);
 			if (mlx->scene->speculars == 1)
-			specular = ft_dpow(spot_specular(mlx, x, spot), 32) * 255;
+				specular += ft_dpow(spot_specular(mlx, x, spot), 32) * 255;
 		}
 		spot++;
 	}

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:37:11 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 13:00:59 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/21 15:12:55 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,10 @@ int			mouse_move(int x, int y, t_mlx *mlx)
 	{
 		mlx->camera->rot.y -= (mlx->mouse_x - x) / 20.0;
 		mlx->camera->rot.x += (mlx->mouse_y - y) / 20.0;
-		if (mlx->camera->rot.x >= 360)
-			mlx->camera->rot.x = 0;
-		if (mlx->camera->rot.y >= 360)
-			mlx->camera->rot.y = 0;
 		refresh(mlx);
 	}
 	else if (mlx->mouse_2 == 1)
 	{
-		mlx->camera->origin.x += cross_vector(mlx->camera->up, mlx->camera->target).x * (mlx->mouse_x - x) / 10.0;
-		mlx->camera->origin.y += cross_vector(mlx->camera->right, mlx->camera->target).y * (mlx->mouse_y - y) / 10.0;
-		mlx->camera->target = vector_plus(mlx->camera->origin, set_vector(0, 0, -1));
 		refresh(mlx);
 	}
 	/*
