@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 16:37:33 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/07 17:19:19 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/24 14:58:41 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_intersection	get_intersection(t_ray ray, t_mlx *mlx)
 
 	x.ray = ray;
 	x.shape = 0;
+	x.hit_index = 0;
 	x.closest = 1000;
 	x.color = mlx->scene->ambient;
 	return (x);

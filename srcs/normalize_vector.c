@@ -6,33 +6,27 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 12:00:05 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/06 11:39:44 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/24 15:51:47 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_rtv1.h"
 
-double		normalize_vector(t_vector *v)
-{
-	double	len;
-
-	len = vector_length(*v);
-	if (len == 0)
-	{
-		ft_putendl("Prevented vector division by 0 length");
-		return (len);
-	}
-	v->x /= len;
-	v->y /= len;
-	v->z /= len;
-	return (len);
-}
-
 t_vector	normalized_vector(t_vector v)
 {
+	double		len;
+	double		inv_len;
 	t_vector	v2;
 
-	v2 = copy_vector(v);
-	normalize_vector(&v2);
-	return (v2);
+	len = vector_length(v);
+	if (len > 0)
+	{
+		inv_len = 1 / len;
+		v2.x = v.x * inv_len;
+		v2.y = v.y * inv_len;
+		v2.z = v.z * inv_len;
+		return (v2);
+	}
+	else
+		return (v);
 }

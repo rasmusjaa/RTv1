@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:28:57 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 18:40:32 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/24 15:28:09 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,16 @@ int	check_shadow(t_mlx *mlx, t_intersection *x, int spot)
 	while (i < 10)
 	{
 		if (i < mlx->sphere_i)
-			sphere_intersection(mlx->spheres[i], &ix);
+			sphere_intersection(mlx->spheres[i], &ix, i);
 		if (i < mlx->plane_i)
-			plane_intersection(mlx->planes[i], &ix);
+			plane_intersection(mlx->planes[i], &ix, i);
 		if (i < mlx->cylinder_i)
-			cylinder_intersection(mlx->cylinders[i], &ix);
+			cylinder_intersection(mlx->cylinders[i], &ix, i);
 		if (i < mlx->cone_i)
-			cone_intersection(mlx->cones[i], &ix);
+			cone_intersection(mlx->cones[i], &ix, i);
 		i++;
 	}
+	set_hit(mlx, &ix);
 
 	double		len;
 	t_vector	light;

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 11:37:09 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 19:15:12 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/24 18:15:43 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct		s_cylinder
 	int				color;
 	double			t1;
 	double			t2;
+	t_vector		axis;
 	int				i;
 }					t_cylinder;
 
@@ -85,10 +86,12 @@ typedef struct		s_cone
 {
 	t_point			p1;
 	t_point			p2;
-	double			radius;
+	double			angle;
+	double			angle_sqr;
 	int				color;
 	double			t1;
 	double			t2;
+	t_vector		axis;
 	int				i;
 }					t_cone;
 
@@ -107,6 +110,7 @@ typedef struct		s_intersection
 	double			d;
 	int				shape;
 	double			closest;
+	int				hit_index;
 	t_vector		hitpoint;
 	t_vector		hitnormal;
 	int				color;
@@ -192,7 +196,6 @@ double				double_sqr(double n);
 t_vector			vector_multiply_nb(t_vector v1, double nb);
 t_vector			vector_divide_nb(t_vector v1, double nb);
 
-double				normalize_vector(t_vector *v);
 t_vector			normalized_vector(t_vector v);
 
 t_vector			vector_plus(t_vector v1, t_vector v2);
@@ -221,10 +224,10 @@ t_point				ray_point(t_ray ray, double d);
 ** Shape calculations
 */
 
-int					plane_intersection(t_plane plane, t_intersection *x);
-int					sphere_intersection(t_sphere sphere, t_intersection *x);
-int					cylinder_intersection(t_cylinder cone, t_intersection *x);
-int					cone_intersection(t_cone cone, t_intersection *x);
+int					plane_intersection(t_plane plane, t_intersection *x, int i);
+int					sphere_intersection(t_sphere sphere, t_intersection *x, int i);
+int					cylinder_intersection(t_cylinder cone, t_intersection *x, int i);
+int					cone_intersection(t_cone cone, t_intersection *x, int i);
 
 /*
 ** Intersections
@@ -239,6 +242,7 @@ t_point				intersect_pos(t_intersection x, t_ray ray, double d);
 ** Draw view
 */
 
+void				set_hit(t_mlx *mlx, t_intersection *x);
 int					get_color(int x, int y, t_mlx *mlx);
 void				*draw_view(void *mlx);
 
