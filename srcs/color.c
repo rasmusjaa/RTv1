@@ -6,17 +6,19 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:28:57 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 15:12:48 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 18:36:46 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_rtv1.h"
 
-int	check_shadow(t_mlx *mlx, t_intersection *x, int spot)
+static int		check_shadow(t_mlx *mlx, t_intersection *x, int spot)
 {
 	t_ray			ray;
 	t_intersection	ix;
 	int				i;
+	double			len;
+	t_vector		light;
 
 	ray.start = x->hitpoint;
 	ray.direction = vector_minus(mlx->spots[spot].p, x->hitpoint);
@@ -36,30 +38,11 @@ int	check_shadow(t_mlx *mlx, t_intersection *x, int spot)
 		i++;
 	}
 	set_hit(mlx, &ix);
-
-	double		len;
-	t_vector	light;
-
 	light = vector_minus(mlx->spots[spot].p, x->hitpoint);
 	len = vector_length(light);
-
-	if (mlx->mouse_3 == 1)
-	{
-		ft_printf("spot %d: closest %f light dist %f\n", spot, ix.closest, len);
-	}
 	if (len <= ix.closest || (ix.closest <= RAY_T_MIN))
-	{
-		if (mlx->mouse_3 == 1)
-		{
-			ft_printf("not in shadow\n");
-		}
 		return (0);
-	}
-	if (mlx->mouse_3 == 1)
-	{
-		ft_printf("is in shadow\n");
-	}
-	return(1);
+	return (1);
 }
 
 static double	spot_shading(t_mlx *mlx, t_intersection *x, int spot)
@@ -79,16 +62,10 @@ static double	spot_shading(t_mlx *mlx, t_intersection *x, int spot)
 	if (mlx->spots[spot].type == 1)
 		intensity = mlx->spots[spot].intensity / 100;
 	else
-		intensity = mlx->spots[spot].intensity * (1 / (1 + distance + pow(distance, 2)));
-	if (mlx->mouse_3 == 1)
-	{
-		ft_printf("spot %d: power %f distance %f intensity %f ",
-		spot, mlx->spots[spot].intensity, distance, intensity);
-		ft_printf("dot light %f\n", d);
-	}
+		intensity = mlx->spots[spot].intensity *
+		(1 / (1 + distance + pow(distance, 2)));
 	d *= intensity;
-	if (d < 0)
-		d = 0;
+	d = ft_double_clamp(d, 0, 1);
 	return (d);
 }
 
@@ -97,43 +74,44 @@ static double	spot_specular(t_mlx *mlx, t_intersection *x, int spot)
 	double		d;
 	t_vector	camera;
 	t_vector	light;
-
 	double		intensity;
+	t_vector	reflection;
 
 	light = vector_minus(x->hitpoint, mlx->spots[spot].p);
 	intensity = mlx->spots[spot].intensity / vector_length(light);
 	if (intensity > 1)
 		intensity = 1.0;
-	if (mlx->mouse_3 == 1)
-	{
-		ft_printf("spot %d: i %f len %f intense %f\n",
-		mlx->spots[spot].intensity, spot, vector_length(light), intensity);
-	}
-
 	camera = vector_minus(x->hitpoint, mlx->camera->origin);
 	camera = normalized_vector(camera);
-	t_vector reflection;
-
-	reflection = vector_multiply_nb(x->hitnormal, 2 * dot_vector(x->hitnormal, light));
+	reflection = vector_multiply_nb(x->hitnormal, 2 *
+		dot_vector(x->hitnormal, light));
 	reflection = vector_minus(reflection, light);
 	reflection = normalized_vector(reflection);
-	d = dot_vector(reflection, camera); // camera to light for cool effect
-	if (d < 0)
-		d = 0;
-	if (mlx->mouse_3 == 1)
-	{
-		ft_printf("spot %d: specular %f\n",	spot, d);
-	}
+	d = dot_vector(reflection, camera);
+	d = ft_double_clamp(d, 0, 1);
 	return (d * intensity);
 }
 
-void		ray_color(t_mlx *mlx, t_intersection *x)
+static void		add_colors(t_mlx *mlx, t_intersection *x,
+	double d, double specular)
+{
+	int		rgb[3];
+
+	rgb[0] = ((x->color >> 16) & 0xff) * d + specular + mlx->scene->ambient_r;
+	rgb[1] = ((x->color >> 8) & 0xff) * d + specular + mlx->scene->ambient_g;
+	rgb[2] = (x->color & 0xff) * d + specular + mlx->scene->ambient_b;
+	rgb[0] = ft_int_clamp(rgb[0], 0, 255);
+	rgb[1] = ft_int_clamp(rgb[1], 0, 255);
+	rgb[2] = ft_int_clamp(rgb[2], 0, 255);
+	x->color = rgb[0] << 16 | rgb[1] << 8 | rgb[2];
+}
+
+void			ray_color(t_mlx *mlx, t_intersection *x)
 {
 	int		spot;
 	double	d;
 	double	specular;
 	int		shadow;
-	int		rgb[3];
 
 	d = 0;
 	spot = 0;
@@ -150,19 +128,6 @@ void		ray_color(t_mlx *mlx, t_intersection *x)
 		spot++;
 	}
 	d += (double)mlx->scene->ambient / 100;
-	if (d > 1)
-		d = 1;
-
-	rgb[0] = ((x->color >> 16) & 0xff) * d + (int)specular + mlx->scene->ambient_r;
-	rgb[1] = ((x->color >> 8) & 0xff) * d + (int)specular + mlx->scene->ambient_g;
-	rgb[2] = (x->color & 0xff) * d + (int)specular + mlx->scene->ambient_b;
-
-	if (rgb[0] > 255)
-		rgb[0] = 255;
-	if (rgb[1] > 255)
-		rgb[1] = 255;
-	if (rgb[2] > 255)
-		rgb[2] = 255;
-	x->color = rgb[0]<<16 | rgb[1]<<8 | rgb[2];
-
+	d = ft_double_clamp(d, 0, 1);
+	add_colors(mlx, x, d, specular);
 }

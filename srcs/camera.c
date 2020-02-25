@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:18:45 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 18:16:00 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 18:19:44 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void		perspective_cam(t_point origin, t_vector target, t_mlx *mlx)
 	camera->forward = normalized_vector(vector_minus(target, origin));
 	up = vector_y();
 	camera->right = normalized_vector(cross_vector(camera->forward, up));
-	camera->up = normalized_vector(cross_vector(camera->right, camera->forward));
+	camera->up = normalized_vector(cross_vector(camera->right,
+		camera->forward));
 	camera->height = tan((FOV * M_PI / 180.0) / 2);
 	camera->width = camera->height * aspect_ratio;
 }
@@ -72,6 +73,6 @@ void		read_camera(t_mlx *mlx, char *line)
 	if (mlx->camera->origin.x == mlx->camera->target.x &&
 		mlx->camera->origin.y == mlx->camera->target.y &&
 		mlx->camera->origin.z == mlx->camera->target.z)
-	mlx->camera->target.z = mlx->camera->origin.z - 1;
+		mlx->camera->target.z = mlx->camera->origin.z - 1;
 	set_camera(mlx);
 }
