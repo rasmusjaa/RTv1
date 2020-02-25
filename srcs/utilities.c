@@ -6,13 +6,17 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 17:28:48 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 16:32:08 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 18:06:29 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_rtv1.h"
 
-// void		read_scene(t_mlx *mlx);
+void		exit_message(char *str)
+{
+	ft_putendl(str);
+	exit (0);
+}
 
 void		refresh(t_mlx *mlx)
 {
@@ -65,26 +69,28 @@ t_vector	rotate_vector(t_vector origin, t_vector target, t_vector rot)
 {
 	t_vector	temp;
 
-//	printf("original  %f %f %f\n", target.x, target.y, target.z);
-
 	target = vector_minus(target, origin);
-
-	rot.x *= -1 * M_PI / 180.0;
-	rot.y *= -1 * M_PI / 180.0;
-	rot.z *= -1 * M_PI / 180.0;
-	temp.y = target.y;
-	target.y = target.y * cos(rot.x) + target.z * sin(rot.x);
-	target.z = -1 * temp.y * sin(rot.x) + target.z * cos(rot.x);
-	temp.x = target.x;
-	target.x = target.x * cos(rot.y) + target.z * sin(rot.y);
-	target.z = -1 * temp.x * sin(rot.y) + target.z * cos(rot.y);
-	temp.x = target.x;
-	target.x = target.x * cos(rot.z) - target.y * sin(rot.z);
-	target.y = temp.x * sin(rot.z) + target.y * cos(rot.z);
-
+	if (rot.x != 0)
+	{
+		rot.x *= -1 * M_PI / 180.0;
+		temp.y = target.y;
+		target.y = target.y * cos(rot.x) + target.z * sin(rot.x);
+		target.z = -1 * temp.y * sin(rot.x) + target.z * cos(rot.x);
+	}
+	if (rot.y != 0)
+	{
+		rot.y *= -1 * M_PI / 180.0;
+		temp.x = target.x;
+		target.x = target.x * cos(rot.y) + target.z * sin(rot.y);
+		target.z = -1 * temp.x * sin(rot.y) + target.z * cos(rot.y);
+	}
+	if (rot.z != 0)
+	{
+		rot.z *= -1 * M_PI / 180.0;
+		temp.x = target.x;
+		target.x = target.x * cos(rot.z) - target.y * sin(rot.z);
+		target.y = temp.x * sin(rot.z) + target.y * cos(rot.z);
+	}
 	target = vector_plus(target, origin);
-
-//	printf("rotated  %f %f %f\n", target.x, target.y, target.z);
-
 	return (target);
 }

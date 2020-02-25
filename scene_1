@@ -3,6 +3,7 @@
 # 0-10 spheres, 0-10 planes, 0-10 cylinders, 0-10 cones, 0-10 spots
 # colors RGB: 0 - 255
 # rotations: -180 - 180
+# cylinder radius 1 - 99
 # cone angle: 1 - 45
 # scene speculars, shadows, shading: 0 or 1
 # other numbers: -99 - 99
@@ -27,15 +28,14 @@ plane		0	0	-25	0	0	1				0	100	100	0		0		0
 # CYLINDERS	start-XYZ	end-XYZ			radius	color-RGB	rotation-XYZ
 cylinder	-5	3	-13	-5	4	-13		1		255	255	0	0		0		0
 
-# cone angle is angle between cone axis and surface
+# cone angle is angle between cone axis and surface, use 1-45
 
 # CONES		start-XYZ	end-XYZ			angle	color-RGB	rotation-XYZ
-cone		5	4	-12	5	3	-12		10		255	255	255	0		0		0
+cone		5	4	-10	5	3	-10		20		255	255	255	0		0		0
 
 # spot with type 0 == lamp, type 1 == sun
 
 # SPOTS		origin-XYZ			power	type	color-RGB
 spot		-10	10	-10			50		0		255	255	255
-spot		10	10	-10			50		0		255	255	255
+spot		10	10	-10			100		0		255	255	255
 #spot		0	8	0			40		1		255	255	255
-

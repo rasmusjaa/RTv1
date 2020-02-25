@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 11:37:09 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 16:31:45 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 18:15:34 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct		s_plane
 	t_vector		normal;
 	int				color;
 	double			t1;
+	t_vector		rot;
 	int				i;
 }					t_plane;
 
@@ -67,6 +68,7 @@ typedef struct		s_sphere
 	int				color;
 	double			t1;
 	double			t2;
+	t_vector		rot;
 	int				i;
 }					t_sphere;
 
@@ -79,6 +81,7 @@ typedef struct		s_cylinder
 	double			t1;
 	double			t2;
 	t_vector		axis;
+	t_vector		rot;
 	int				i;
 }					t_cylinder;
 
@@ -92,6 +95,7 @@ typedef struct		s_cone
 	double			t1;
 	double			t2;
 	t_vector		axis;
+	t_vector		rot;
 	int				i;
 }					t_cone;
 
@@ -225,11 +229,15 @@ t_point				ray_point(t_ray ray, double d);
 */
 
 int					plane_intersection(t_plane plane, t_intersection *x, int i);
+int					read_plane(t_mlx *mlx, char *line);
 int					sphere_intersection(t_sphere sphere,
 						t_intersection *x, int i);
+int					read_sphere(t_mlx *mlx, char *line);
 int					cylinder_intersection(t_cylinder cone,
 						t_intersection *x, int i);
+int					read_cyli(t_mlx *mlx, char *line);
 int					cone_intersection(t_cone cone, t_intersection *x, int i);
+int					read_cone(t_mlx *mlx, char *line);
 
 /*
 ** Intersections
@@ -255,7 +263,7 @@ void				*draw_view(void *mlx);
 void				set_camera(t_mlx *mlx);
 void				perspective_cam(t_point origin, t_vector target,
 						t_mlx *mlx);
-void				read_camera_line(t_mlx *mlx, char *line);
+void				read_camera(t_mlx *mlx, char *line);
 t_ray				camera_ray(t_camera *camera, t_point point);
 
 /*
@@ -268,12 +276,15 @@ void				ray_color(t_mlx *mlx, t_intersection *x);
 ** Read scene
 */
 
+void				int_array_set(int *arr, int n, int nb);
+void				int_array_read(int *arr, int n, char *line);
 void				read_scene(t_mlx *mlx);
 
 /*
 ** Utility functions
 */
 
+void				exit_message(char *str);
 void				refresh(t_mlx *mlx);
 int					exit_free(t_mlx *mlx);
 void				add_texts(t_mlx *mlx);

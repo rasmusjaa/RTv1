@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:18:45 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 16:32:06 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 18:16:00 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		set_camera(t_mlx *mlx)
 	perspective_cam(mlx->camera->origin, mlx->camera->target, mlx);
 }
 
-void		read_camera_line(t_mlx *mlx, char *line)
+void		read_camera(t_mlx *mlx, char *line)
 {
 	int		arr[10];
 
