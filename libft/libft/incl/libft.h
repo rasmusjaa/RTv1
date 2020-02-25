@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 11:58:55 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/20 13:56:42 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:27:24 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,10 @@ char				*ft_base_ltoa(long long n, int base, char *chararr);
 char				*ft_base_ultoa(unsigned long long nb,
 						int base, char *chararr);
 char				*ft_trim_n_first(int n, char *str);
+double				ft_double_clamp(double nb, double min, double max);
+double				ft_double_clamp_0(double nb, double min, double max);
+int					ft_int_clamp(int nb, int min, int max);
+int					ft_int_clamp_0(int nb, int min, int max);
 
 int					ft_get_next_line(const int fd, char **line);
 

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:28:57 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/24 15:28:09 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 15:12:48 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_shadow(t_mlx *mlx, t_intersection *x, int spot)
 	{
 		ft_printf("spot %d: closest %f light dist %f\n", spot, ix.closest, len);
 	}
-	if (len <= ix.closest)// || (ix.closest <= RAY_T_MIN))
+	if (len <= ix.closest || (ix.closest <= RAY_T_MIN))
 	{
 		if (mlx->mouse_3 == 1)
 		{
@@ -84,8 +84,7 @@ static double	spot_shading(t_mlx *mlx, t_intersection *x, int spot)
 	{
 		ft_printf("spot %d: power %f distance %f intensity %f ",
 		spot, mlx->spots[spot].intensity, distance, intensity);
-		ft_printf("distance %f shading multiplier %f\n",
-		d);
+		ft_printf("dot light %f\n", d);
 	}
 	d *= intensity;
 	if (d < 0)

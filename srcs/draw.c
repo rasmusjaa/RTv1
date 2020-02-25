@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 18:35:28 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/24 18:57:35 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 15:45:01 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,14 @@ void		set_hit(t_mlx *mlx, t_intersection *x)
 	}
 	else if (x->shape == CYLINDER)
 	{
-		x->hitnormal = normalized_vector(vector_minus(x->hitpoint,
-			mlx->cylinders[x->hit_index].p1));
+		double		d;
+		t_vector	v;
+		x->hitnormal = vector_minus(x->hitpoint,
+			mlx->cylinders[x->hit_index].p1);
+		d = dot_vector(mlx->cylinders[x->hit_index].axis, x->hitnormal);
+		v = vector_plus(mlx->cylinders[x->hit_index].p1,
+			vector_multiply_nb(mlx->cylinders[x->hit_index].axis, d));
+		x->hitnormal = normalized_vector(vector_minus(x->hitpoint, v));
 	}
 	else if (x->shape == CONE)
 	{
@@ -41,15 +47,7 @@ void		set_hit(t_mlx *mlx, t_intersection *x)
 		x->hitnormal = vector_divide_nb(vector_multiply_nb(x->hitnormal,
 			dot_vector(mlx->cones[x->hit_index].axis, x->hitnormal)),
 			dot_vector(x->hitnormal, x->hitnormal));
-		x->hitnormal = vector_minus(x->hitnormal, mlx->cones[x->hit_index].axis);
-
-		// t_vector	coned =
-		// vector_minus(mlx->cones[x->hit_index].p1, mlx->cones[x->hit_index].p2);
-		// t_vector	hit_cone =
-		// vector_minus(x->hitpoint, mlx->cones[x->hit_index].p1);
-		// x->hitnormal = vector_minus(hit_cone,
-		// 	vector_multiply_nb(coned, vector_length(hit_cone) / cos(10 * M_PI / 180.0))
-		// 	);
+		x->hitnormal = vector_minus(mlx->cones[x->hit_index].axis, x->hitnormal);
 		x->hitnormal = normalized_vector(x->hitnormal);
 	}
 }
@@ -86,9 +84,7 @@ int		get_color(int x, int y, t_mlx *mlx)
 		ft_printf("distance to object: %f\n", ix.closest);
 		ft_printf("hitpoint %.3f %.3f %.3f\n", ix.hitpoint.x, ix.hitpoint.y, ix.hitpoint.z);
 		ft_printf("object %d color %#.6x\n", ix.shape, ix.color);
-		ft_printf("\n*** CONE ***\n");
-		ft_printf("x %f y %f z %f\n", mlx->cones[0].p1.x, mlx->cones[0].p1.y, mlx->cones[0].p1.z);
-		ft_printf("x %f y %f z %f\n", mlx->cones[0].p2.x, mlx->cones[0].p2.y, mlx->cones[0].p2.z);
+		ft_printf("normal x %f y %f z %f\n", ix.hitnormal.x, ix.hitnormal.y, ix.hitnormal.z);
 	}
 	ray_color(mlx, &ix);
 	return (ix.color);

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 11:37:09 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/24 18:15:43 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:31:45 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,8 +225,10 @@ t_point				ray_point(t_ray ray, double d);
 */
 
 int					plane_intersection(t_plane plane, t_intersection *x, int i);
-int					sphere_intersection(t_sphere sphere, t_intersection *x, int i);
-int					cylinder_intersection(t_cylinder cone, t_intersection *x, int i);
+int					sphere_intersection(t_sphere sphere,
+						t_intersection *x, int i);
+int					cylinder_intersection(t_cylinder cone,
+						t_intersection *x, int i);
 int					cone_intersection(t_cone cone, t_intersection *x, int i);
 
 /*
@@ -250,8 +252,10 @@ void				*draw_view(void *mlx);
 ** Camera
 */
 
+void				set_camera(t_mlx *mlx);
 void				perspective_cam(t_point origin, t_vector target,
 						t_mlx *mlx);
+void				read_camera_line(t_mlx *mlx, char *line);
 t_ray				camera_ray(t_camera *camera, t_point point);
 
 /*
@@ -272,7 +276,6 @@ void				read_scene(t_mlx *mlx);
 
 void				refresh(t_mlx *mlx);
 int					exit_free(t_mlx *mlx);
-void				set_objects(t_mlx *mlx);
 void				add_texts(t_mlx *mlx);
 void				multi_thread(t_mlx *mlx);
 t_vector			rotate_vector(t_vector origin, t_vector target,

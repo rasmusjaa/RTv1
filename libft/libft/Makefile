@@ -6,7 +6,7 @@
 #    By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/19 17:57:45 by rjaakonm          #+#    #+#              #
-#    Updated: 2020/02/20 13:57:07 by rjaakonm         ###   ########.fr        #
+#    Updated: 2020/02/25 16:09:33 by rjaakonm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,9 @@ SRCS =	srcs/ft_lstiter.c \
 		srcs/ft_base_ultoa.c \
 		srcs/ft_longlong_numbercount.c \
 		srcs/ft_ulonglong_numbercount.c \
-		srcs/ft_trim_n_first.c
+		srcs/ft_trim_n_first.c \
+		srcs/ft_int_clamp.c \
+		srcs/ft_double_clamp.c
 
 OBJS = $(SRCS:.c=.o)
 

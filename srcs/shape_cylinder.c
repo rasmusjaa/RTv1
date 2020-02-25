@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:41:55 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/24 15:48:43 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 12:58:52 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,31 @@
 
 int			cylinder_intersection(t_cylinder cylinder, t_intersection *x, int i)
 {
-	t_vector	to_cylinder;
-	t_vector	quadratic;
+	t_vector	to;
+	t_vector	to_x;
+	t_vector	ray_x;
+	t_vector	quad;
 	double		t1;
 	double		t2;
 	double		d;
 
-	to_cylinder = vector_minus(x->ray.start, cylinder.p1);
-	quadratic.x = vector_length_pwr2(x->ray.direction);
-	quadratic.y = 2 * dot_vector(x->ray.direction, to_cylinder);
-	quadratic.z = vector_length_pwr2(to_cylinder) - double_sqr(cylinder.radius);
-	d = double_sqr(quadratic.y) - 4 * quadratic.x * quadratic.z;
+	to = vector_minus(x->ray.start, cylinder.p1);
+	to_x = cross_vector(to, cylinder.axis);
+	ray_x = cross_vector(x->ray.direction, cylinder.axis);
+	quad.x = dot_vector(ray_x, ray_x);
+	quad.y = 2 * dot_vector(ray_x, to_x);
+	quad.z = dot_vector(to_x, to_x) - cylinder.radius * cylinder.radius * dot_vector(cylinder.axis, cylinder.axis);
+
+	d = double_sqr(quad.y) - 4 * quad.x * quad.z;
 	if (d < 0.0)
 		return (0);
 	else if (d == 0)
 	{
-		t1 = (-1 * quadratic.y - sqrt(d)) / (2 * quadratic.x);
+		t1 = (-1 * quad.y - sqrt(d)) / (2 * quad.x);
 		return (1);
 	}
-	t1 = (-1 * quadratic.y - sqrt(d)) / (2 * quadratic.x);
-	t2 = (-1 * quadratic.y + sqrt(d)) / (2 * quadratic.x);
+	t1 = (-1 * quad.y - sqrt(d)) / (2 * quad.x);
+	t2 = (-1 * quad.y + sqrt(d)) / (2 * quad.x);
 	if (t1 > RAY_T_MIN && t1 < x->closest)
 		x->closest = t1;
 	else if (t2 > RAY_T_MIN && t2 < x->closest)

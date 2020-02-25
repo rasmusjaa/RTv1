@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 17:28:48 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 12:55:56 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:32:08 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void		refresh(t_mlx *mlx)
 	mlx_destroy_image(mlx->mlx_ptr, mlx->img_ptr);
 	mlx->img_ptr = mlx_new_image(mlx->mlx_ptr, WINDOW_X, WINDOW_Y);
 	mlx_clear_window(mlx->mlx_ptr, mlx->win_ptr);
+	set_camera(mlx);
 	multi_thread(mlx);
 }
 
@@ -28,19 +29,6 @@ int			exit_free(t_mlx *mlx)
 	free(mlx->scene);
 	free(mlx);
 	exit(0);
-}
-
-void		set_objects(t_mlx *mlx)
-{
-	if (mlx->camera->origin.x == mlx->camera->target.x &&
-		mlx->camera->origin.y == mlx->camera->target.y &&
-		mlx->camera->origin.z == mlx->camera->target.z)
-	mlx->camera->target.z = mlx->camera->origin.z - 1;
-	mlx->camera->target = rotate_vector(mlx->camera->origin,
-	mlx->camera->target, mlx->camera->rot);
-	perspective_cam(mlx->camera->origin, mlx->camera->target, mlx);
-	mlx->camera->rot.x = 0;
-	mlx->camera->rot.y = 0;
 }
 
 void		add_texts(t_mlx *mlx)

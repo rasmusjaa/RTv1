@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:18:45 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/24 14:05:54 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:32:06 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,35 @@ t_ray		camera_ray(t_camera *camera, t_point target)
 	ray.direction = vector_plus(ray.direction, v2);
 	ray.direction = normalized_vector(ray.direction);
 	return (ray);
+}
+
+void		set_camera(t_mlx *mlx)
+{
+	mlx->camera->target = rotate_vector(mlx->camera->origin,
+	mlx->camera->target, mlx->camera->rot);
+	mlx->camera->rot.x = 0;
+	mlx->camera->rot.y = 0;
+	perspective_cam(mlx->camera->origin, mlx->camera->target, mlx);
+}
+
+void		read_camera_line(t_mlx *mlx, char *line)
+{
+	int		arr[10];
+
+	int_array_set(arr, 10, 0);
+	int_array_read(arr, 10, line);
+	mlx->camera->origin.x = ft_int_clamp_0(arr[0], -99, 99);
+	mlx->camera->origin.y = ft_int_clamp_0(arr[1], -99, 99);
+	mlx->camera->origin.z = ft_int_clamp_0(arr[2], -99, 99);
+	mlx->camera->target.x = ft_int_clamp_0(arr[3], -99, 99);
+	mlx->camera->target.y = ft_int_clamp_0(arr[4], -99, 99);
+	mlx->camera->target.z = ft_int_clamp_0(arr[5], -99, 99);
+	mlx->camera->rot.x = ft_int_clamp_0(arr[6], -180, 180);
+	mlx->camera->rot.y = ft_int_clamp_0(arr[7], -180, 180);
+	mlx->camera->rot.z = ft_int_clamp_0(arr[8], -180, 180);
+	if (mlx->camera->origin.x == mlx->camera->target.x &&
+		mlx->camera->origin.y == mlx->camera->target.y &&
+		mlx->camera->origin.z == mlx->camera->target.z)
+	mlx->camera->target.z = mlx->camera->origin.z - 1;
+	set_camera(mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 16:23:37 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 18:52:47 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:27:09 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void			multi_thread(t_mlx *mlx)
 	t_mlx		*copies[THREADS];
 	int			i;
 
-	set_objects(mlx);
 	thread_group = malloc(sizeof(pthread_t) * THREADS);
 	i = 0;
 	while (i < THREADS)
@@ -55,9 +54,15 @@ static void		mlx_values(t_mlx *mlx)
 	mlx->cylinder_i = 0;
 	mlx->cone_i = 0;
 	mlx->spot_i = 0;
-	mlx->camera->origin = set_vector(0, 0, 5);
-	mlx->camera->target = set_vector(0, 0, -5);
+	mlx->camera->origin = set_vector(0, 0, 0);
+	mlx->camera->target = set_vector(0, 0, -1);
 	mlx->scene->ambient = 0x000000;
+	mlx->scene->speculars = 0;
+	mlx->scene->shadows = 0;
+	mlx->scene->shading = 0;
+	mlx->scene->ambient_r = 0;
+	mlx->scene->ambient_g = 0;
+	mlx->scene->ambient_b = 0;
 }
 
 static int		handle_expose(void	*mlx2)
@@ -70,16 +75,6 @@ static int		handle_expose(void	*mlx2)
 	mlx->cylinder_i = 0;
 	mlx->cone_i = 0;
 	mlx->spot_i = 0;
-	mlx->camera->origin = set_vector(0, 0, 0);
-	mlx->camera->target = set_vector(0, 0, -1);
-	mlx->camera->rot = set_vector(0, 0, 0);
-	mlx->scene->ambient = 0;
-	mlx->scene->speculars = 0;
-	mlx->scene->shadows = 0;
-	mlx->scene->shading = 0;
-	mlx->scene->ambient_r = 0;
-	mlx->scene->ambient_g = 0;
-	mlx->scene->ambient_b = 0;
 	read_scene((t_mlx *)mlx);
 	return (0);
 }

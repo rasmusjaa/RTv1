@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 11:17:04 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/24 18:16:01 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 16:31:47 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,15 @@ void		read_spot_line(t_mlx *mlx, char *line)
 	mlx->spots[mlx->spot_i].color = arr[5]<<16 | arr[6]<<8 | arr[7];
 }
 
+void		set_plane(t_plane *plane)
+{
+	if (plane->p.x == plane->normal.x && plane->p.y == plane->normal.y &&
+		plane->p.z == plane->normal.z)
+		plane->normal.y = plane->p.y + 1;
+	plane->normal = vector_minus(plane->normal, plane->p);
+	plane->normal = normalized_vector(plane->normal);
+}
+
 void		read_plane_line(t_mlx *mlx, char *line)
 {
 	int		i;
@@ -100,6 +109,7 @@ void		read_plane_line(t_mlx *mlx, char *line)
 	mlx->planes[mlx->plane_i].normal.y = arr[4];
 	mlx->planes[mlx->plane_i].normal.z = arr[5];
 	mlx->planes[mlx->plane_i].color = arr[6]<<16 | arr[7]<<8 | arr[8];
+	set_plane(&mlx->planes[mlx->plane_i]);
 }
 
 void		read_sphere_line(t_mlx *mlx, char *line)
@@ -129,6 +139,15 @@ void		read_sphere_line(t_mlx *mlx, char *line)
 	mlx->spheres[mlx->sphere_i].color = arr[4]<<16 | arr[5]<<8 | arr[6];
 }
 
+void		set_cylinder(t_cylinder *cylinder)
+{
+	if (cylinder->p1.x == cylinder->p2.x && cylinder->p1.y == cylinder->p2.y &&
+		cylinder->p1.z == cylinder->p2.z)
+		cylinder->p2.y = cylinder->p1.y + 1;
+	cylinder->axis = vector_minus(cylinder->p1, cylinder->p2);
+	cylinder->axis = normalized_vector(cylinder->axis);
+}
+
 void		read_cylinder_line(t_mlx *mlx, char *line)
 {
 	int		i;
@@ -137,7 +156,7 @@ void		read_cylinder_line(t_mlx *mlx, char *line)
 	int_array_set(arr, 10, 0);
 	int_array_read(arr, 10, line);
 	i = 0;
-	while (i < 4)
+	while (i < 7)
 	{
 		if (arr[i] < -100 || arr[i] > 100)
 			arr[i] = 0;
@@ -157,6 +176,7 @@ void		read_cylinder_line(t_mlx *mlx, char *line)
 	mlx->cylinders[mlx->cylinder_i].p2.z = arr[5];
 	mlx->cylinders[mlx->cylinder_i].radius = arr[6];
 	mlx->cylinders[mlx->cylinder_i].color = arr[7]<<16 | arr[8]<<8 | arr[9];
+	set_cylinder(&mlx->cylinders[mlx->cylinder_i]);
 }
 
 void		set_cone(t_cone *cone)
@@ -208,55 +228,17 @@ void		read_cone_line(t_mlx *mlx, char *line)
 
 void		read_scene_line(t_mlx *mlx, char *line)
 {
-	int		i;
 	int		arr[7];
 
 	int_array_set(arr, 7, 0);
 	int_array_read(arr, 7, line);
-	if (arr[0] < 0 || arr[0] > 100)
-			arr[0] = 0;
-	i = 1;
-	while (i < 4)
-	{
-		if (arr[i] < 0 || arr[i] > 1)
-			arr[i] = 0;
-		i++;
-	}
-	while (i < 7)
-	{
-		if (arr[i] < 0 || arr[i] > 255)
-			arr[i] = 0;
-		i++;
-	}
-	mlx->scene->ambient = arr[0];
-	mlx->scene->speculars = arr[1];
-	mlx->scene->shadows = arr[2];
-	mlx->scene->shading = arr[3];
-	mlx->scene->ambient_r = arr[4];
-	mlx->scene->ambient_g = arr[5];
-	mlx->scene->ambient_b = arr[6];
-}
-
-void		read_camera_line(t_mlx *mlx, char *line)
-{
-	int		i;
-	int		arr[6];
-
-	int_array_set(arr, 6, 0);
-	int_array_read(arr, 6, line);
-	i = 0;
-	while (i < 6)
-	{
-		if (arr[i] < -100 || arr[i] > 100)
-			arr[i] = 0;
-		i++;
-	}
-	mlx->camera->origin.x = arr[0];
-	mlx->camera->origin.y = arr[1];
-	mlx->camera->origin.z = arr[2];
-	mlx->camera->target.x = arr[3];
-	mlx->camera->target.y = arr[4];
-	mlx->camera->target.z = arr[5];
+	mlx->scene->ambient = ft_int_clamp_0(arr[0], 0, 100);
+	mlx->scene->speculars = ft_int_clamp_0(arr[1], 0, 1);
+	mlx->scene->shadows = ft_int_clamp_0(arr[2], 0, 1);
+	mlx->scene->shading = ft_int_clamp_0(arr[3], 0, 1);
+	mlx->scene->ambient_r = ft_int_clamp_0(arr[4], 0, 255);
+	mlx->scene->ambient_g = ft_int_clamp_0(arr[5], 0, 255);
+	mlx->scene->ambient_b = ft_int_clamp_0(arr[6], 0, 255);
 }
 
 void		read_scene(t_mlx *mlx)

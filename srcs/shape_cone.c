@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:41:55 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/24 18:40:51 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/25 15:41:55 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,21 @@ int			cone_intersection(t_cone cone, t_intersection *x, int i)
 	quad.z = dot_vector(to_cone, cone.axis) * dot_vector(to_cone, cone.axis) -
 		dot_vector(to_cone, to_cone) * cone.angle_sqr;
 	d = double_sqr(quad.y) - 4 * quad.x * quad.z;
-	if (d < 0.0)
-		return (0);
 	t1 = (-1 * quad.y - sqrt(d)) / (2 * quad.x);
 	t2 = (-1 * quad.y + sqrt(d)) / (2 * quad.x);
-	d = t1 < t2 ? t1 : t2;
-	if (d > RAY_T_MIN && d < x->closest)
+	x->hitpoint = ray_point(x->ray, t1);
+	if (dot_vector(vector_minus(x->hitpoint, cone.p1), cone.axis) > 0)
+		return (0);
+	if (t2 > RAY_T_MIN && t2 < x->closest)
 	{
-		x->closest = d;
+		x->closest = t2;
+		x->color = cone.color;
+		x->shape = CONE;
+		x->hit_index = i;
+	}
+	else if (t1 > RAY_T_MIN && t1 < x->closest)
+	{
+		x->closest = t1;
 		x->color = cone.color;
 		x->shape = CONE;
 		x->hit_index = i;
