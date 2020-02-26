@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:18:45 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 18:19:44 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 18:00:54 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,8 @@ void		read_camera(t_mlx *mlx, char *line)
 		mlx->camera->origin.y == mlx->camera->target.y &&
 		mlx->camera->origin.z == mlx->camera->target.z)
 		mlx->camera->target.z = mlx->camera->origin.z - 1;
+	if (mlx->camera->origin.x == mlx->camera->target.x &&
+		mlx->camera->origin.z == mlx->camera->target.z)
+		mlx->camera->target.z = mlx->camera->origin.z - 0.01;
 	set_camera(mlx);
 }
