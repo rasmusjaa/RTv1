@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:41:55 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 18:14:52 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:50:42 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int			sphere_intersection(t_sphere sphere, t_intersection *x, int i)
 {
 	t_vector	to_sphere;
 	t_vector	quadratic;
-	double		t1;
-	double		t2;
 	double		d;
 
 	to_sphere = vector_minus(x->ray.start, sphere.p);
@@ -41,14 +39,14 @@ int			sphere_intersection(t_sphere sphere, t_intersection *x, int i)
 	d = double_sqr(quadratic.y) - 4 * quadratic.x * quadratic.z;
 	if (d < 0.0)
 		return (0);
-	t1 = (-1 * quadratic.y - sqrt(d)) / (2 * quadratic.x);
-	if (t1 > RAY_T_MIN && t1 < x->closest)
-		set_sphere_hit(sphere, x, t1, i);
+	x->t1 = (-1 * quadratic.y - sqrt(d)) / (2 * quadratic.x);
+	if (x->t1 > RAY_T_MIN && x->t1 < x->closest)
+		set_sphere_hit(sphere, x, x->t1, i);
 	if (d == 0)
 		return (1);
-	t2 = (-1 * quadratic.y + sqrt(d)) / (2 * quadratic.x);
-	if (t2 > RAY_T_MIN && t2 < x->closest)
-		set_sphere_hit(sphere, x, t2, i);
+	x->t2 = (-1 * quadratic.y + sqrt(d)) / (2 * quadratic.x);
+	if (x->t2 > RAY_T_MIN && x->t2 < x->closest)
+		set_sphere_hit(sphere, x, x->t2, i);
 	return (2);
 }
 
@@ -65,7 +63,7 @@ int			read_sphere(t_mlx *mlx, char *line)
 	mlx->spheres[mlx->sphere_i].p.y = ft_int_clamp_0(arr[1], -99, 99);
 	mlx->spheres[mlx->sphere_i].p.z = ft_int_clamp_0(arr[2], -99, 99);
 	mlx->spheres[mlx->sphere_i].radius = ft_int_clamp(arr[3], 1, 99);
-	mlx->spheres[mlx->sphere_i].color = arr[4]<<16 | arr[5]<<8 | arr[6];
+	mlx->spheres[mlx->sphere_i].color = arr[4] << 16 | arr[5] << 8 | arr[6];
 	mlx->spheres[mlx->sphere_i].rot.x = ft_int_clamp_0(arr[7], -180, 180);
 	mlx->spheres[mlx->sphere_i].rot.y = ft_int_clamp_0(arr[8], -180, 180);
 	mlx->spheres[mlx->sphere_i].rot.z = ft_int_clamp_0(arr[9], -180, 180);

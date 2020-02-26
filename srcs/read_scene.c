@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 11:17:04 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 18:14:23 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:42:43 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		int_array_set(int *arr, int n, int nb)
 	int		i;
 
 	i = 0;
-	while(i < n)
+	while (i < n)
 	{
 		arr[i] = nb;
 		i++;
@@ -45,7 +45,7 @@ void		int_array_read(int *arr, int n, char *line)
 	}
 }
 
-int		read_spot(t_mlx *mlx, char *line)
+int			read_spot(t_mlx *mlx, char *line)
 {
 	int		arr[8];
 
@@ -57,13 +57,11 @@ int		read_spot(t_mlx *mlx, char *line)
 	mlx->spots[mlx->spot_i].p.x = ft_int_clamp_0(arr[0], -99, 99);
 	mlx->spots[mlx->spot_i].p.y = ft_int_clamp_0(arr[1], -99, 99);
 	mlx->spots[mlx->spot_i].p.z = ft_int_clamp_0(arr[2], -99, 99);
-	mlx->spots[mlx->spot_i].intensity = ft_int_clamp_0(arr[3], 0, 100);
+	mlx->spots[mlx->spot_i].intensity = ft_int_clamp(arr[3], 0, 100);
 	mlx->spots[mlx->spot_i].type = arr[4] != 0 ? 1 : 0;
-	mlx->spots[mlx->spot_i].color = arr[5]<<16 | arr[6]<<8 | arr[7];
+	mlx->spots[mlx->spot_i].color = arr[5] << 16 | arr[6] << 8 | arr[7];
 	return (0);
 }
-
-
 
 static void	read_scene_line(t_mlx *mlx, char *line)
 {
@@ -104,8 +102,7 @@ void		read_scene(t_mlx *mlx)
 			mlx->cone_i++;
 		else if (!ft_strncmp("spot", line, 4) && !read_spot(mlx, line))
 			mlx->spot_i++;
-		free (line);
-		line = NULL;
+		free(line);
 	}
 	multi_thread(mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 17:28:48 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 18:06:29 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:57:15 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		exit_message(char *str)
 {
 	ft_putendl(str);
-	exit (0);
+	exit(0);
 }
 
 void		refresh(t_mlx *mlx)
@@ -41,11 +41,7 @@ void		add_texts(t_mlx *mlx)
 		"MOVE CAMERA:");
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 50, 0xffffff,
 		"Arrows, Numpad +-");
-	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 70, 0xffffff,
-		"MOVE TARGET:");
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 90, 0xffffff,
-		"Numpad 2468 */");
-	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 110, 0xffffff,
 		"EXIT: Esc");
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 810, 0xffffff,
 		"CAMERA POSITION");
@@ -91,6 +87,5 @@ t_vector	rotate_vector(t_vector origin, t_vector target, t_vector rot)
 		target.x = target.x * cos(rot.z) - target.y * sin(rot.z);
 		target.y = temp.x * sin(rot.z) + target.y * cos(rot.z);
 	}
-	target = vector_plus(target, origin);
-	return (target);
+	return (vector_plus(target, origin));
 }

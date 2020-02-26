@@ -9,7 +9,7 @@
 # other numbers: -99 - 99
 #
 # CAMERA	origin-XYZ	target-XYZ							rotation-XYZ
-camera		0	3	10	0	3	0							0		0		0
+camera		0	3	10	0	3	10							0		0		0
 
 # SCENE		ambient	speculars	shadows	shading	color-RGB
 scene		10		1			1		1		0	0	0
@@ -17,7 +17,7 @@ scene		10		1			1		1		0	0	0
 # SPHERES	origin-XYZ					radius	color-RGB	rotation-XYZ
 sphere		0	3	-16					4		0	255	0	0		0		0
 sphere		-4	6	-14					1		0	0	255	0		0		0
-sphere		4	6	-14					1		0	0	255	0		0		0
+sphere		6	6	-14					1		0	0	255	0		0		0
 sphere		-1	4	-13					1		255	255	255	0		0		0
 sphere		1	4	-13					1		255	255	255	0		0		0
 

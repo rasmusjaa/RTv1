@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:28:57 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 18:36:46 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:23:43 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static int		check_shadow(t_mlx *mlx, t_intersection *x, int spot)
 	t_ray			ray;
 	t_intersection	ix;
 	int				i;
-	double			len;
-	t_vector		light;
 
 	ray.start = x->hitpoint;
 	ray.direction = vector_minus(mlx->spots[spot].p, x->hitpoint);
@@ -35,14 +33,12 @@ static int		check_shadow(t_mlx *mlx, t_intersection *x, int spot)
 			cylinder_intersection(mlx->cylinders[i], &ix, i);
 		if (i < mlx->cone_i)
 			cone_intersection(mlx->cones[i], &ix, i);
+		if (ix.closest <= vector_length(vector_minus(
+				mlx->spots[spot].p, x->hitpoint)))
+			return (1);
 		i++;
 	}
-	set_hit(mlx, &ix);
-	light = vector_minus(mlx->spots[spot].p, x->hitpoint);
-	len = vector_length(light);
-	if (len <= ix.closest || (ix.closest <= RAY_T_MIN))
-		return (0);
-	return (1);
+	return (0);
 }
 
 static double	spot_shading(t_mlx *mlx, t_intersection *x, int spot)
@@ -108,18 +104,20 @@ static void		add_colors(t_mlx *mlx, t_intersection *x,
 
 void			ray_color(t_mlx *mlx, t_intersection *x)
 {
-	int		spot;
 	double	d;
-	double	specular;
 	int		shadow;
+	int		spot;
+	double	specular;
 
 	d = 0;
+	shadow = 1;
 	spot = 0;
 	specular = 0;
 	while (spot < mlx->spot_i)
 	{
-		shadow = check_shadow(mlx, x, spot);
-		if (shadow != 1 || mlx->scene->shadows == 0)
+		if (mlx->scene->shadows == 1)
+			shadow = check_shadow(mlx, x, spot);
+		if (shadow == 0 || mlx->scene->shadows == 0)
 		{
 			d += spot_shading(mlx, x, spot);
 			if (mlx->scene->speculars == 1)

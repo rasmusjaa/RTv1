@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 11:37:09 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 18:15:34 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:46:08 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ typedef struct		s_intersection
 	int				hit_index;
 	t_vector		hitpoint;
 	t_vector		hitnormal;
+	double			t1;
+	double			t2;
 	int				color;
 }					t_intersection;
 
@@ -233,9 +235,11 @@ int					read_plane(t_mlx *mlx, char *line);
 int					sphere_intersection(t_sphere sphere,
 						t_intersection *x, int i);
 int					read_sphere(t_mlx *mlx, char *line);
+void				set_cylinder_normal(t_mlx *mlx, t_intersection *x);
 int					cylinder_intersection(t_cylinder cone,
 						t_intersection *x, int i);
 int					read_cyli(t_mlx *mlx, char *line);
+void				set_cone_normal(t_mlx *mlx, t_intersection *x);
 int					cone_intersection(t_cone cone, t_intersection *x, int i);
 int					read_cone(t_mlx *mlx, char *line);
 
@@ -252,7 +256,7 @@ t_point				intersect_pos(t_intersection x, t_ray ray, double d);
 ** Draw view
 */
 
-void				set_hit(t_mlx *mlx, t_intersection *x);
+void				set_hit_normal(t_mlx *mlx, t_intersection *x);
 int					get_color(int x, int y, t_mlx *mlx);
 void				*draw_view(void *mlx);
 

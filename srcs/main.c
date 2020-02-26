@@ -6,17 +6,11 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 16:23:37 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 16:27:09 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:34:16 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_rtv1.h"
-
-static void		copy_mlx(t_mlx *copy, t_mlx *mlx, int i)
-{
-	ft_memcpy(copy, mlx, sizeof(t_mlx));
-	copy->thread = i;
-}
 
 void			multi_thread(t_mlx *mlx)
 {
@@ -29,7 +23,8 @@ void			multi_thread(t_mlx *mlx)
 	while (i < THREADS)
 	{
 		copies[i] = (t_mlx *)malloc(sizeof(t_mlx));
-		copy_mlx(copies[i], mlx, i);
+		ft_memcpy(copies[i], mlx, sizeof(t_mlx));
+		copies[i]->thread = i;
 		pthread_create(&thread_group[i], NULL, draw_view, copies[i]);
 		i++;
 	}
@@ -65,7 +60,7 @@ static void		mlx_values(t_mlx *mlx)
 	mlx->scene->ambient_b = 0;
 }
 
-static int		handle_expose(void	*mlx2)
+static int		handle_expose(void *mlx2)
 {
 	t_mlx	*mlx;
 
@@ -79,7 +74,7 @@ static int		handle_expose(void	*mlx2)
 	return (0);
 }
 
-static int		mlx_start(t_mlx	*mlx)
+static int		mlx_start(t_mlx *mlx)
 {
 	mlx_values(mlx);
 	mlx->mlx_ptr = mlx_init();
@@ -106,7 +101,7 @@ int				main(int ac, char **av)
 	if (ac != 2 || ft_strncmp(av[1], "scene_", 6) != 0)
 	{
 		ft_putendl("usage: ./RTv1 [scene_##]");
-		exit (0);
+		exit(0);
 	}
 	if (!(mlx = (t_mlx *)malloc(sizeof(t_mlx))))
 		return (1);
@@ -118,24 +113,3 @@ int				main(int ac, char **av)
 	mlx_start(mlx);
 	return (0);
 }
-/*
-vektorit:
-add
-substract
-normalize
-
-muodoilla:
-position
-rotation
-scale / radius
-color
-
-valoilla:
-type
-position
-direction (point lightilla, ei auringolla)
-color
-intensity
-*/
-
-// optimointiin tsekkaa does intersect joka muodosta ja lopeta loop jos edes 1

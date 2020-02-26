@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:41:55 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 18:14:35 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:48:48 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int			cone_intersection(t_cone cone, t_intersection *x, int i)
 {
 	t_vector	to_cone;
 	t_vector	quad;
-	double		t1;
-	double		t2;
 	double		d;
 
 	to_cone = vector_minus(x->ray.start, cone.p1);
@@ -53,17 +51,15 @@ int			cone_intersection(t_cone cone, t_intersection *x, int i)
 	d = double_sqr(quad.y) - 4 * quad.x * quad.z;
 	if (d < 0.0)
 		return (0);
-	t1 = (-1 * quad.y - sqrt(d)) / (2 * quad.x);
-	t2 = (-1 * quad.y + sqrt(d)) / (2 * quad.x);
-	if (split_cone(cone, x, t1) == 1 || split_cone(cone, x, t2) == 1)
+	x->t1 = (-1 * quad.y - sqrt(d)) / (2 * quad.x);
+	x->t2 = (-1 * quad.y + sqrt(d)) / (2 * quad.x);
+	if (split_cone(cone, x, x->t1) == 1 || split_cone(cone, x, x->t2) == 1)
 		return (0);
-	if (t2 > RAY_T_MIN && t2 < x->closest)
-		set_cone_hit(cone, x, t2, i);
-	if (d == 0)
-		return (1);
-	if (t1 > RAY_T_MIN && t1 < x->closest)
-		set_cone_hit(cone, x, t1, i);
-	return (2);
+	if (x->t2 > RAY_T_MIN && x->t2 < x->closest)
+		set_cone_hit(cone, x, x->t2, i);
+	if (x->t1 > RAY_T_MIN && x->t1 < x->closest)
+		set_cone_hit(cone, x, x->t1, i);
+	return (d == 0) ? (1) : (2);
 }
 
 static void	set_cone(t_cone *cone)
@@ -94,7 +90,7 @@ int			read_cone(t_mlx *mlx, char *line)
 	mlx->cones[mlx->cone_i].p2.y = ft_int_clamp_0(arr[4], -99, 99);
 	mlx->cones[mlx->cone_i].p2.z = ft_int_clamp_0(arr[5], -99, 99);
 	mlx->cones[mlx->cone_i].angle = ft_int_clamp(arr[6], 1, 45);
-	mlx->cones[mlx->cone_i].color = arr[7]<<16 | arr[8]<<8 | arr[9];
+	mlx->cones[mlx->cone_i].color = arr[7] << 16 | arr[8] << 8 | arr[9];
 	mlx->cones[mlx->cone_i].rot.x = ft_int_clamp_0(arr[10], -180, 180);
 	mlx->cones[mlx->cone_i].rot.y = ft_int_clamp_0(arr[11], -180, 180);
 	mlx->cones[mlx->cone_i].rot.z = ft_int_clamp_0(arr[12], -180, 180);

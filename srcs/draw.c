@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 18:35:28 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 15:45:01 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:02:06 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,52 +18,39 @@ static void	image_set(int x, int y, t_mlx *mlx, int color)
 		* mlx->bpp)) = color;
 }
 
-void		set_hit(t_mlx *mlx, t_intersection *x)
+void		set_hit_normal(t_mlx *mlx, t_intersection *x)
 {
 	x->hitpoint = ray_point(x->ray, x->closest);
 	if (x->shape == SPHERE)
-	{
 		x->hitnormal = normalized_vector(vector_minus(x->hitpoint,
 			mlx->spheres[x->hit_index].p));
-	}
 	else if (x->shape == PLANE)
-	{
 		x->hitnormal = mlx->planes[x->hit_index].normal;
-	}
 	else if (x->shape == CYLINDER)
-	{
-		double		d;
-		t_vector	v;
-		x->hitnormal = vector_minus(x->hitpoint,
-			mlx->cylinders[x->hit_index].p1);
-		d = dot_vector(mlx->cylinders[x->hit_index].axis, x->hitnormal);
-		v = vector_plus(mlx->cylinders[x->hit_index].p1,
-			vector_multiply_nb(mlx->cylinders[x->hit_index].axis, d));
-		x->hitnormal = normalized_vector(vector_minus(x->hitpoint, v));
-	}
+		set_cylinder_normal(mlx, x);
 	else if (x->shape == CONE)
 	{
 		x->hitnormal = vector_minus(x->hitpoint, mlx->cones[x->hit_index].p1);
 		x->hitnormal = vector_divide_nb(vector_multiply_nb(x->hitnormal,
 			dot_vector(mlx->cones[x->hit_index].axis, x->hitnormal)),
 			dot_vector(x->hitnormal, x->hitnormal));
-		x->hitnormal = vector_minus(mlx->cones[x->hit_index].axis, x->hitnormal);
+		x->hitnormal = vector_minus(mlx->cones[x->hit_index].axis,
+			x->hitnormal);
 		x->hitnormal = normalized_vector(x->hitnormal);
 	}
 }
 
-int		get_color(int x, int y, t_mlx *mlx)
+int			get_color(int x, int y, t_mlx *mlx)
 {
-	t_vector	target;
-	t_ray		ray;
-	t_intersection ix;
-	int		i;
+	t_vector		target;
+	t_ray			ray;
+	t_intersection	ix;
+	int				i;
 
 	target.x = 2.0 * x / (mlx->img_width - 1) - 1.0;
 	target.y = -2.0 * y / (mlx->img_height - 1) + 1;
 	ray = camera_ray(mlx->camera, target);
 	ix = get_intersection(ray, mlx);
-
 	i = 0;
 	while (i < 10)
 	{
@@ -77,15 +64,7 @@ int		get_color(int x, int y, t_mlx *mlx)
 			cone_intersection(mlx->cones[i], &ix, i);
 		i++;
 	}
-	set_hit(mlx, &ix);
-	if (mlx->mouse_3 == 1)
-	{
-		ft_printf("\n*** CHECK X %d Y %d ***\n", x, y);
-		ft_printf("distance to object: %f\n", ix.closest);
-		ft_printf("hitpoint %.3f %.3f %.3f\n", ix.hitpoint.x, ix.hitpoint.y, ix.hitpoint.z);
-		ft_printf("object %d color %#.6x\n", ix.shape, ix.color);
-		ft_printf("normal x %f y %f z %f\n", ix.hitnormal.x, ix.hitnormal.y, ix.hitnormal.z);
-	}
+	set_hit_normal(mlx, &ix);
 	ray_color(mlx, &ix);
 	return (ix.color);
 }
@@ -98,7 +77,6 @@ void		*draw_view(void *data)
 	t_mlx	*mlx;
 
 	mlx = (t_mlx *)data;
-
 	color = mlx->scene->ambient;
 	y = mlx->thread;
 	while (y < mlx->img_height)

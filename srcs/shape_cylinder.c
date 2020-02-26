@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:41:55 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 18:14:40 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:50:04 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,21 @@
 **	returns number of touches, for later use: t1 first touch t2 second
 */
 
-static void	set_cylinder_hits(t_cylinder cylinder, t_intersection *x, double d, int i)
+void		set_cylinder_normal(t_mlx *mlx, t_intersection *x)
+{
+	double		d;
+	t_vector	v;
+
+	x->hitnormal = vector_minus(x->hitpoint,
+		mlx->cylinders[x->hit_index].p1);
+	d = dot_vector(mlx->cylinders[x->hit_index].axis, x->hitnormal);
+	v = vector_plus(mlx->cylinders[x->hit_index].p1,
+		vector_multiply_nb(mlx->cylinders[x->hit_index].axis, d));
+	x->hitnormal = normalized_vector(vector_minus(x->hitpoint, v));
+}
+
+static void	set_cylinder_hits(t_cylinder cylinder, t_intersection *x,
+	double d, int i)
 {
 	x->closest = d;
 	x->color = cylinder.color;
@@ -30,8 +44,6 @@ int			cylinder_intersection(t_cylinder cylinder, t_intersection *x, int i)
 	t_vector	to_x;
 	t_vector	ray_x;
 	t_vector	quad;
-	double		t1;
-	double		t2;
 	double		d;
 
 	to = vector_minus(x->ray.start, cylinder.p1);
@@ -44,14 +56,14 @@ int			cylinder_intersection(t_cylinder cylinder, t_intersection *x, int i)
 	d = double_sqr(quad.y) - 4 * quad.x * quad.z;
 	if (d < 0.0)
 		return (0);
-	t1 = (-1 * quad.y - sqrt(d)) / (2 * quad.x);
-	if (t1 > RAY_T_MIN && t1 < x->closest)
-		set_cylinder_hits(cylinder, x, t1, i);
+	x->t1 = (-1 * quad.y - sqrt(d)) / (2 * quad.x);
+	if (x->t1 > RAY_T_MIN && x->t1 < x->closest)
+		set_cylinder_hits(cylinder, x, x->t1, i);
 	if (d == 0)
 		return (1);
-	t2 = (-1 * quad.y + sqrt(d)) / (2 * quad.x);
-	if (t2 > RAY_T_MIN && t2 < x->closest)
-		set_cylinder_hits(cylinder, x, t2, i);
+	x->t2 = (-1 * quad.y + sqrt(d)) / (2 * quad.x);
+	if (x->t2 > RAY_T_MIN && x->t2 < x->closest)
+		set_cylinder_hits(cylinder, x, x->t2, i);
 	return (2);
 }
 
@@ -81,7 +93,7 @@ int			read_cyli(t_mlx *mlx, char *line)
 	mlx->cylinders[mlx->cylinder_i].p2.y = ft_int_clamp_0(arr[4], -99, 99);
 	mlx->cylinders[mlx->cylinder_i].p2.z = ft_int_clamp_0(arr[5], -99, 99);
 	mlx->cylinders[mlx->cylinder_i].radius = ft_int_clamp(arr[6], 1, 99);
-	mlx->cylinders[mlx->cylinder_i].color = arr[7]<<16 | arr[8]<<8 | arr[9];
+	mlx->cylinders[mlx->cylinder_i].color = arr[7] << 16 | arr[8] << 8 | arr[9];
 	mlx->cylinders[mlx->cylinder_i].rot.x = ft_int_clamp_0(arr[10], -180, 180);
 	mlx->cylinders[mlx->cylinder_i].rot.y = ft_int_clamp_0(arr[11], -180, 180);
 	mlx->cylinders[mlx->cylinder_i].rot.z = ft_int_clamp_0(arr[12], -180, 180);

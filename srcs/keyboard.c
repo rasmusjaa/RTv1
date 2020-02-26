@@ -6,52 +6,15 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 17:33:05 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/21 15:14:00 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:17:17 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_rtv1.h"
 
-static void	deal_move_target(int key, t_mlx *mlx)
+static void	deal_move_camera2(int key, t_mlx *mlx)
 {
-	if (key == 86)
-		mlx->camera->target.x -= 1;
-	if (key == 88)
-		mlx->camera->target.x += 1;
-	if (key == 91)
-		mlx->camera->target.y += 1;
-	if (key == 84)
-		mlx->camera->target.y -= 1;
-	if (key == 75)
-		mlx->camera->target.z -= 1;
-	if (key == 67)
-		mlx->camera->target.z += 1;
-	refresh(mlx);
-}
-
-static void	deal_move_camera(int key, t_mlx *mlx)
-{
-	if (key == 123)
-	{
-		mlx->camera->origin = vector_minus(mlx->camera->origin, mlx->camera->right);
-		mlx->camera->target = vector_minus(mlx->camera->target, mlx->camera->right);
-	}
-	else if (key == 124)
-	{
-		mlx->camera->origin = vector_plus(mlx->camera->origin, mlx->camera->right);
-		mlx->camera->target = vector_plus(mlx->camera->target, mlx->camera->right);
-	}
-	else if (key == 126)
-	{
-		mlx->camera->origin = vector_plus(mlx->camera->origin, mlx->camera->forward);
-		mlx->camera->target = vector_plus(mlx->camera->target, mlx->camera->forward);
-	}
-	else if (key == 125)
-	{
-		mlx->camera->origin = vector_minus(mlx->camera->origin, mlx->camera->forward);
-		mlx->camera->target = vector_minus(mlx->camera->target, mlx->camera->forward);
-	}
-	else if (key == 78)
+	if (key == 78)
 	{
 		mlx->camera->origin.y -= 1;
 		mlx->camera->target.y -= 1;
@@ -64,6 +27,34 @@ static void	deal_move_camera(int key, t_mlx *mlx)
 	refresh(mlx);
 }
 
+static void	deal_move_camera(int key, t_mlx *mlx)
+{
+	t_camera	*cam;
+
+	cam = mlx->camera;
+	if (key == 123)
+	{
+		cam->origin = vector_minus(cam->origin, cam->right);
+		cam->target = vector_minus(cam->target, cam->right);
+	}
+	else if (key == 124)
+	{
+		cam->origin = vector_plus(cam->origin, cam->right);
+		cam->target = vector_plus(cam->target, cam->right);
+	}
+	else if (key == 126)
+	{
+		cam->origin = vector_plus(cam->origin, cam->forward);
+		cam->target = vector_plus(cam->target, cam->forward);
+	}
+	else if (key == 125)
+	{
+		cam->origin = vector_minus(cam->origin, cam->forward);
+		cam->target = vector_minus(cam->target, cam->forward);
+	}
+	refresh(mlx);
+}
+
 static void	deal_esc_exit(int key, t_mlx *mlx)
 {
 	if (key == 53)
@@ -72,13 +63,12 @@ static void	deal_esc_exit(int key, t_mlx *mlx)
 
 int			deal_key(int key, t_mlx *mlx)
 {
-	ft_printf("%d <- key\n", key);
-	if ((key > 122 && key < 127) || key == 78 || key == 69)
+	ft_printf("You pressed key: %d\n", key);
+	if (key > 122 && key < 127)
 		deal_move_camera(key, mlx);
+	else if (key == 78 || key == 69)
+		deal_move_camera2(key, mlx);
 	else if (key == 53)
 		deal_esc_exit(key, mlx);
-	else if (key == 86 || key == 88 || key == 91 || key == 84
-			|| key == 75 || key == 67)
-		deal_move_target(key, mlx);
 	return (0);
 }

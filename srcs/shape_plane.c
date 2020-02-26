@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:29:43 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/25 18:14:45 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:44:15 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int			read_plane(t_mlx *mlx, char *line)
 	mlx->planes[mlx->plane_i].normal.x = ft_int_clamp_0(arr[3], -99, 99);
 	mlx->planes[mlx->plane_i].normal.y = ft_int_clamp_0(arr[4], -99, 99);
 	mlx->planes[mlx->plane_i].normal.z = ft_int_clamp_0(arr[5], -99, 99);
-	mlx->planes[mlx->plane_i].color = arr[6]<<16 | arr[7]<<8 | arr[8];
+	mlx->planes[mlx->plane_i].color = arr[6] << 16 | arr[7] << 8 | arr[8];
 	mlx->planes[mlx->plane_i].rot.x = ft_int_clamp_0(arr[9], -180, 180);
 	mlx->planes[mlx->plane_i].rot.y = ft_int_clamp_0(arr[10], -180, 180);
 	mlx->planes[mlx->plane_i].rot.z = ft_int_clamp_0(arr[11], -180, 180);
