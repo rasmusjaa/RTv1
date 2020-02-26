@@ -12,27 +12,22 @@
 camera		0	3	10	0	3	10							0		0		0
 
 # SCENE		ambient	speculars	shadows	shading	color-RGB
-scene		10		1			1		1		0	0	0
+scene		0		1			1		1		0	0	20
 
 # SPHERES	origin-XYZ					radius	color-RGB	rotation-XYZ
-sphere		0	3	-16					4		0	255	0	0		0		0
-sphere		5	6	-10					1		0	0	255	0		0		0
-sphere		1	4	-13					1		255	255	255	0		0		0
 
 # PLANES	origin-XYZ	normal-XYZ				color-RGB	rotation-XYZ
-plane		0	-1	0	0	1	0				100	0	0	0		0		0
-plane		0	0	-25	0	0	1				0	100	100	0		0		0
+plane		0	-1	0	0	1	0				255	255	255	0		0		0
 
 # CYLINDERS	start-XYZ	end-XYZ			radius	color-RGB	rotation-XYZ
-cylinder	-8	3	-10	-7	6	-10		1		255	255	0	0		0		0
 
 # cone angle is angle between cone axis and surface, use 1-45
 
 # CONES		start-XYZ	end-XYZ			angle	color-RGB	rotation-XYZ
-cone		5	4	-10	5	3	-10		20		255	255	255	0		0		0
+cone		0	-1	-16	0	4	-16		20		0	255	255	0		0		0
 
 # spot with type 0 == lamp, type 1 == sun
 
 # SPOTS		origin-XYZ			power	type	color-RGB
-spot		-10	10	-10			100		0		255	255	255
-spot		10	10	-10			100		0		255	255	255
+spot		-10	10	-10			50		1		255	255	255
+spot		10	10	-10			50		1		255	255	255
