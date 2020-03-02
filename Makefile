@@ -6,7 +6,7 @@
 #    By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/16 14:55:48 by rjaakonm          #+#    #+#              #
-#    Updated: 2020/02/21 18:13:01 by rjaakonm         ###   ########.fr        #
+#    Updated: 2020/02/27 14:13:29 by rjaakonm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ INCL = -I incl/ -I libft/libft/incl/ -I libft/printf/incl/
 all: $(NAME)
 
 $(NAME): libftmake
-	gcc $(FLAGS) $(INCL) $(SRCS) $(LIB) -o $(NAME)
+	gcc $(FLAGS) $(INCL) $(SRCS) $(LIB) -o $(NAME) -O2
 
 libftmake:
 	@make -C libft

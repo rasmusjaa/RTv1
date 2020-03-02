@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 17:41:55 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/26 12:48:48 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/27 13:51:21 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			cone_intersection(t_cone cone, t_intersection *x, int i)
 		return (0);
 	x->t1 = (-1 * quad.y - sqrt(d)) / (2 * quad.x);
 	x->t2 = (-1 * quad.y + sqrt(d)) / (2 * quad.x);
-	if (split_cone(cone, x, x->t1) == 1 || split_cone(cone, x, x->t2) == 1)
+	if (split_cone(cone, x, x->t2) == 1)
 		return (0);
 	if (x->t2 > RAY_T_MIN && x->t2 < x->closest)
 		set_cone_hit(cone, x, x->t2, i);

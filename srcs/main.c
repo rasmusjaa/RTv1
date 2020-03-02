@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/31 16:23:37 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/26 12:34:16 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/03/02 14:27:27 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ static int		handle_expose(void *mlx2)
 	mlx->cylinder_i = 0;
 	mlx->cone_i = 0;
 	mlx->spot_i = 0;
+	mlx->scene->ambient = 0x000000;
+	mlx->scene->speculars = 0;
+	mlx->scene->shadows = 0;
+	mlx->scene->shading = 0;
+	mlx->scene->ambient_r = 0;
+	mlx->scene->ambient_g = 0;
+	mlx->scene->ambient_b = 0;
 	read_scene((t_mlx *)mlx);
 	return (0);
 }
@@ -100,7 +107,7 @@ int				main(int ac, char **av)
 
 	if (ac != 2 || ft_strncmp(av[1], "scene_", 6) != 0)
 	{
-		ft_putendl("usage: ./RTv1 [scene_##]");
+		ft_putendl("usage: ./RTv1 [scene_#]");
 		exit(0);
 	}
 	if (!(mlx = (t_mlx *)malloc(sizeof(t_mlx))))

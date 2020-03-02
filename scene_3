@@ -1,6 +1,7 @@
 # REQUIREMENTS:
 # 1 camera, 1 scene
 # 0-10 spheres, 0-10 planes, 0-10 cylinders, 0-10 cones, 0-10 spots
+# no lights inside objects
 # colors RGB: 0 - 255
 # rotations: -180 - 180
 # cylinder radius 1 - 99

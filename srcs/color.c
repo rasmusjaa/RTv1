@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:28:57 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/26 12:23:43 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/02/27 13:43:25 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int		check_shadow(t_mlx *mlx, t_intersection *x, int spot)
 		if (i < mlx->cone_i)
 			cone_intersection(mlx->cones[i], &ix, i);
 		if (ix.closest <= vector_length(vector_minus(
-				mlx->spots[spot].p, x->hitpoint)))
+				mlx->spots[spot].p, x->hitpoint)) + RAY_T_MIN)
 			return (1);
 		i++;
 	}
