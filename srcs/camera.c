@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:18:45 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/03/02 14:28:08 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/03/04 13:45:59 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ t_ray		camera_ray(t_camera *camera, t_point target)
 
 void		set_camera(t_mlx *mlx)
 {
+	if (mlx->camera->origin.x == mlx->camera->target.x &&
+		mlx->camera->origin.y == mlx->camera->target.y &&
+		mlx->camera->origin.z == mlx->camera->target.z)
+		mlx->camera->target.z = mlx->camera->origin.z - 1;
+	if (mlx->camera->origin.x == mlx->camera->target.x &&
+		mlx->camera->origin.z == mlx->camera->target.z)
+		mlx->camera->target.z = mlx->camera->origin.z - 0.01;
 	mlx->camera->target = rotate_vector(mlx->camera->origin,
 	mlx->camera->target, mlx->camera->rot);
 	mlx->camera->rot.x = 0;
@@ -70,12 +77,5 @@ void		read_camera(t_mlx *mlx, char *line)
 	mlx->camera->rot.x = ft_int_clamp_0(arr[6], -180, 180);
 	mlx->camera->rot.y = ft_int_clamp_0(arr[7], -180, 180);
 	mlx->camera->rot.z = ft_int_clamp_0(arr[8], -180, 180);
-	if (mlx->camera->origin.x == mlx->camera->target.x &&
-		mlx->camera->origin.y == mlx->camera->target.y &&
-		mlx->camera->origin.z == mlx->camera->target.z)
-		mlx->camera->target.z = mlx->camera->origin.z - 1;
-	if (mlx->camera->origin.x == mlx->camera->target.x &&
-		mlx->camera->origin.z == mlx->camera->target.z)
-		mlx->camera->target.z = mlx->camera->origin.z - 0.01;
 	set_camera(mlx);
 }

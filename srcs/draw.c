@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 18:35:28 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/02/26 12:02:06 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/03/04 14:34:23 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void		set_hit_normal(t_mlx *mlx, t_intersection *x)
 		x->hitnormal = vector_minus(mlx->cones[x->hit_index].axis,
 			x->hitnormal);
 		x->hitnormal = normalized_vector(x->hitnormal);
+		if (dot_vector(mlx->cones[x->hit_index].axis,
+				vector_minus(x->hitpoint, mlx->cones[x->hit_index].p1)) > 0)
+			x->hitnormal = vector_multiply_nb(x->hitnormal, -1);
 	}
 }
 

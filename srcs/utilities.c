@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 17:28:48 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/03/02 14:04:09 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/03/04 13:35:17 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void		add_texts(t_mlx *mlx)
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 50, 0xffffff,
 		"Arrows, Numpad +-");
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 90, 0xffffff,
+		"CAMERA TARGET: asdwqe");
+	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 130, 0xffffff,
 		"EXIT: Esc");
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 810, 0xffffff,
 		"CAMERA POSITION");
