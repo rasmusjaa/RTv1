@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 11:37:09 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/03/02 14:27:35 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:44:18 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,6 +292,7 @@ void				exit_message(char *str);
 void				refresh(t_mlx *mlx);
 int					exit_free(t_mlx *mlx);
 void				add_texts(t_mlx *mlx);
+void				add_texts_2(t_mlx *mlx);
 void				multi_thread(t_mlx *mlx);
 t_vector			rotate_vector(t_vector origin, t_vector target,
 						t_vector rot);

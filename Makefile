@@ -6,7 +6,7 @@
 #    By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/16 14:55:48 by rjaakonm          #+#    #+#              #
-#    Updated: 2020/02/27 14:13:29 by rjaakonm         ###   ########.fr        #
+#    Updated: 2020/03/05 17:43:40 by rjaakonm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS =	srcs/main.c \
 		srcs/keyboard.c \
 		srcs/mouse.c \
 		srcs/utilities.c \
+		srcs/utilities_2.c \
 		srcs/read_scene.c \
 		srcs/color.c
 

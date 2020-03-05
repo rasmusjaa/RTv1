@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 17:28:48 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/03/04 13:35:17 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:44:32 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,9 @@ void		add_texts(t_mlx *mlx)
 		"EXIT: Esc");
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 810, 0xffffff,
 		"CAMERA POSITION");
-	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 830, 0xffffff,
-		ft_itoa((int)mlx->camera->origin.x));
-	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 850, 0xffffff,
-		ft_itoa((int)mlx->camera->origin.y));
-	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 870, 0xffffff,
-		ft_itoa((int)mlx->camera->origin.z));
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 890, 0xffffff,
 		"CAMERA TARGET");
-	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 910, 0xffffff,
-		ft_itoa((int)mlx->camera->target.x));
-	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 930, 0xffffff,
-		ft_itoa((int)mlx->camera->target.y));
-	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 1015, 950, 0xffffff,
-		ft_itoa((int)mlx->camera->target.z));
+	add_texts_2(mlx);
 }
 
 t_vector	rotate_vector(t_vector origin, t_vector target, t_vector rot)
