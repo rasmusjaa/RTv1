@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/03 19:18:45 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/03/04 13:45:59 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:01:56 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		perspective_cam(t_point origin, t_vector target, t_mlx *mlx)
 	aspect_ratio = mlx->img_width / mlx->img_height;
 	camera->origin = origin;
 	camera->forward = normalized_vector(vector_minus(target, origin));
-	up = vector_y();
+	up = set_vector(0, 1, -0.00001);
 	camera->right = normalized_vector(cross_vector(camera->forward, up));
 	camera->up = normalized_vector(cross_vector(camera->right,
 		camera->forward));
@@ -52,9 +52,6 @@ void		set_camera(t_mlx *mlx)
 		mlx->camera->origin.y == mlx->camera->target.y &&
 		mlx->camera->origin.z == mlx->camera->target.z)
 		mlx->camera->target.z = mlx->camera->origin.z - 1;
-	if (mlx->camera->origin.x == mlx->camera->target.x &&
-		mlx->camera->origin.z == mlx->camera->target.z)
-		mlx->camera->target.z = mlx->camera->origin.z - 0.01;
 	mlx->camera->target = rotate_vector(mlx->camera->origin,
 	mlx->camera->target, mlx->camera->rot);
 	mlx->camera->rot.x = 0;

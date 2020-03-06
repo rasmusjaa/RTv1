@@ -10,7 +10,7 @@
 # other numbers: -99 - 99
 #
 # CAMERA	origin-XYZ	target-XYZ							rotation-XYZ
-camera		0	3	20	0	3	0							0		0		0
+camera		0	0	20	0	0	0							0		0		0
 
 # SCENE		ambient	speculars	shadows	shading	color-RGB
 scene		10		0			1		1		0	0	0
