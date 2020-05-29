@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:02:30 by rjaakonm          #+#    #+#             */
-/*   Updated: 2019/12/17 13:43:16 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/05/29 19:44:13 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,14 @@ static char	*to_string_list(t_node *start, int len)
 static char	*return_list(t_node *start)
 {
 	int		total;
-	t_node	*temp;
 	t_node	*begin;
 
 	total = 0;
 	begin = start;
-	temp = start;
 	start = start->next;
 	while (start->next != NULL)
 	{
 		total = total + ft_strlen(start->str);
-		temp = start;
 		start = start->next;
 	}
 	total = total + ft_strlen(start->str);

@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:37:11 by rjaakonm          #+#    #+#             */
-/*   Updated: 2020/03/02 14:18:57 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/05/29 22:37:27 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	mouse_wheel(int button, int x, int y, t_mlx *mlx)
 
 int			mouse_press(int button, int x, int y, t_mlx *mlx)
 {
+	ft_printf("You pressed button %d\n", button);
 	if (button == 1)
 		mlx->mouse_1 = 1;
 	else if (button == 2)

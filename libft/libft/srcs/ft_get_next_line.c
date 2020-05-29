@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 16:00:21 by rjaakonm          #+#    #+#             */
-/*   Updated: 2019/11/08 14:26:03 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/05/29 19:37:14 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ int				ft_get_next_line(const int fd, char **line)
 	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
 	{
 		buf[ret] = '\0';
-		if (strings[fd] == '\0')
+		if (strings[fd] == NULL)
 			strings[fd] = ft_strnew(0);
 		temp = ft_strjoin(strings[fd], buf);
 		free(strings[fd]);
 		strings[fd] = temp;
-		if (ft_strchr(buf, '\n') > 0)
+		if (ft_strchr(buf, '\n') != NULL)
 			break ;
 	}
 	if (ret < 0)

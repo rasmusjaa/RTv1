@@ -6,7 +6,7 @@
 /*   By: rjaakonm <rjaakonm@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 19:39:31 by rjaakonm          #+#    #+#             */
-/*   Updated: 2019/12/03 13:04:23 by rjaakonm         ###   ########.fr       */
+/*   Updated: 2020/05/29 19:44:40 by rjaakonm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,8 @@ static char				*float_end(long double nb, t_node *current)
 	int					x;
 	double				nb2;
 	char				*s2;
-	int					not;
 
 	x = 0;
-	not = 0;
 	nb2 = 0;
 	s2 = ft_strnew(current->precision);
 	while (nb >= 1)
